@@ -4,17 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andro.covid_19.R
+import com.andro.covid_19.api_services.ApiHandler
+import com.andro.covid_19.api_services.ApiInterface
+import com.andro.covid_19.network.ConnectivityInterceptorImpl
+import kotlinx.android.synthetic.main.fragment_gallery.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 
 class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
 
-    override fun onCreateView(
+    override  fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -22,10 +29,23 @@ class GalleryFragment : Fragment() {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+//val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
+//        val apiHandler = ApiHandler(api)
+//
+//        apiHandler.specificCountryState.observe(viewLifecycleOwner, Observer {
+//            textView2.text = it.latest_stat_by_country[0].total_cases
+//        })
+//
+//        GlobalScope.launch(Dispatchers.Main) {
+//            randomImg.setImageBitmap(apiHandler.getRandomPicture())
+//            apiHandler.getCaseByCountry()
+//            apiHandler.getHistoryForCountryInDate("Egypt", "2020-04-04")
+//            apiHandler.getWorldTotalState()
+//            apiHandler.getAffectedCountries()
+//            apiHandler.getSpecificCountryState("USA")
+//        }
+
         return root
     }
+
 }
