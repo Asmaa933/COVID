@@ -1,6 +1,6 @@
-package com.andro.covid_19.api_services
+package com.andro.covid_19.data.api_services
 
-import com.andro.covid_19.network.ConnectivityInterceptor
+import com.andro.covid_19.data.network.ConnectivityInterceptor
 import com.andro.retro.json_models.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred

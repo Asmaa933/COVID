@@ -5,16 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andro.covid_19.R
-import com.andro.covid_19.api_services.ApiHandler
-import com.andro.covid_19.api_services.ApiInterface
-import com.andro.covid_19.network.ConnectivityInterceptorImpl
-import kotlinx.android.synthetic.main.fragment_gallery.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.andro.covid_19.viewmodel.GalleryViewModel
 
 
 class GalleryFragment : Fragment() {

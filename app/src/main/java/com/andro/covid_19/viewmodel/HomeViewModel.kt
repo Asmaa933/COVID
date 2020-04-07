@@ -1,4 +1,4 @@
-package com.andro.covid_19.ui.home
+package com.andro.covid_19.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
