@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andro.covid_19.R
+import com.andro.covid_19.viewmodel.SlideshowViewModel
 
 class SlideshowFragment : Fragment() {
 

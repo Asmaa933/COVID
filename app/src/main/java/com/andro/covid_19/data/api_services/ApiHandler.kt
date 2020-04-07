@@ -1,4 +1,4 @@
-package com.andro.covid_19.api_services
+package com.andro.covid_19.data.api_services
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

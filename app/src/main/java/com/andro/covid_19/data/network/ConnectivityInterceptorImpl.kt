@@ -1,12 +1,10 @@
-package com.andro.covid_19.network
+package com.andro.covid_19.data.network
 
 import android.content.Context
 import android.net.ConnectivityManager
 import com.andro.covid_19.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
-import java.net.ConnectException
 
 class ConnectivityInterceptorImpl (context: Context) : ConnectivityInterceptor {
     private val appContext = context.applicationContext
