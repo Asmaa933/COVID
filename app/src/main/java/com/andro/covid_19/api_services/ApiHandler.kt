@@ -11,16 +11,21 @@ import com.andro.retro.json_models.*
 class ApiHandler(private val api: ApiInterface){
 
 //get the random picture
-   suspend fun getRandomPicture(): Bitmap? {
+private val _randomImage = MutableLiveData<Bitmap>()
+    val randomImage: LiveData<Bitmap>
+        get() = _randomImage
+    suspend fun getRandomPicture() {
         var bitmap: Bitmap? = null
        try {
            val responseImg = api.getRandomInstruction().await()
            bitmap = BitmapFactory.decodeStream(responseImg.byteStream())
+           _randomImage.postValue(bitmap)
+
        }catch (e: NoConnectivityException) {
            Log.e("Connectivity", "No internet connection.", e)
        }
-        return  bitmap
     }
+
 // get all affected country in array of String
     private val _effectedCountries = MutableLiveData<AllAffectedCountries>()
      val allAffectedCountries: LiveData<AllAffectedCountries>

@@ -29,15 +29,16 @@ class GalleryFragment : Fragment() {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-//val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
-//        val apiHandler = ApiHandler(api)
-//
-//        apiHandler.specificCountryState.observe(viewLifecycleOwner, Observer {
-//            textView2.text = it.latest_stat_by_country[0].total_cases
+val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
+      val apiHandler = ApiHandler(api)
+
+//        apiHandler.randomImage.observe(viewLifecycleOwner, Observer {
+//            randomImg.setImageBitmap(it)
 //        })
-//
+////
 //        GlobalScope.launch(Dispatchers.Main) {
-//            randomImg.setImageBitmap(apiHandler.getRandomPicture())
+//            apiHandler.getRandomPicture()
+//        }
 //            apiHandler.getCaseByCountry()
 //            apiHandler.getHistoryForCountryInDate("Egypt", "2020-04-04")
 //            apiHandler.getWorldTotalState()
