@@ -5,9 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andro.covid_19.R
+import com.andro.covid_19.data.api_services.ApiHandler
+import com.andro.covid_19.data.api_services.ApiInterface
+import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.covid_19.viewmodel.GalleryViewModel
+import kotlinx.android.synthetic.main.fragment_gallery.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class GalleryFragment : Fragment() {
@@ -22,13 +30,14 @@ class GalleryFragment : Fragment() {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
-      val apiHandler = ApiHandler(api)
 
+//val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
+//      val apiHandler = ApiHandler(api)
+//
 //        apiHandler.randomImage.observe(viewLifecycleOwner, Observer {
 //            randomImg.setImageBitmap(it)
 //        })
-////
+//
 //        GlobalScope.launch(Dispatchers.Main) {
 //            apiHandler.getRandomPicture()
 //        }
