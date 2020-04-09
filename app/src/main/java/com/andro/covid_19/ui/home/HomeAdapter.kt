@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andro.covid_19.R
+import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
 import kotlinx.android.synthetic.main.item.view.*
 
-class HomeAdapter(val items: List<StatByCountry>) : RecyclerView.Adapter< HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(val items: List<CountriesStat>) : RecyclerView.Adapter< HomeAdapter.HomeViewHolder>() {
     class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
@@ -21,8 +22,8 @@ class HomeAdapter(val items: List<StatByCountry>) : RecyclerView.Adapter< HomeAd
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         holder.itemView.tvTitle.text =items[position].country_name
-        holder.itemView.tvCases.text = items[position].total_cases_per1m
-        holder.itemView.tvDeathCase.text = items[position].total_deaths
+        holder.itemView.tvCases.text = items[position].cases
+        holder.itemView.tvDeathCase.text = items[position].deaths
         holder.itemView.tvRecoverCase.text = items[position].total_recovered
 
     }

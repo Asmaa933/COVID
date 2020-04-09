@@ -6,8 +6,10 @@ import android.os.AsyncTask
 import android.os.Message
 import androidx.lifecycle.LiveData
 import com.andro.covid_19.data.api_services.ApiHandler
+import com.andro.covid_19.data.db.CountriesStatDao
 import com.andro.covid_19.data.db.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
+import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +23,9 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         get() = Dispatchers.Main
 
     private lateinit var CountrystatDao: CountrystatDao
+    private lateinit var CountriesStatDao: CountriesStatDao
+
+
     private val ApiHandler: ApiHandler? = null
    // private var AllStatByCountry:LiveData<List<StatByCountry>>
 
@@ -29,6 +34,8 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         val database: CovidDataBase? = CovidDataBase.getInstance(context)
         if (database != null) {
             CountrystatDao = database.CountrystatDao()!!
+            CountriesStatDao = database.CountriesStatDao()!!
+
         }
        // AllStatByCountry = CountrystatDao.getAll()
 
@@ -40,10 +47,18 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
 
     }
 
+    override fun getAllCountry(): LiveData<List<CountriesStat>> {
+        return  CountriesStatDao?.getAll()
+    }
+
     override fun saveCountry(StatByCountry: StatByCountry) {
        // val insertUserAsyncTask = InsertUserAsyncTask(CountrystatDao).execute(StatByCountry)
         launch { InsertCountry(StatByCountry) }
 
+    }
+
+    override fun saveCountriesStat(countriesStat: CountriesStat) {
+        launch { InsertCountry(countriesStat) }
     }
 
     override fun deleteCountry(movie: StatByCountry?) {
@@ -65,6 +80,13 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         withContext(Dispatchers.IO)
         {
             CountrystatDao.insert(StatByCountry)
+        }
+    }
+    private suspend fun InsertCountry(countriesStat: CountriesStat)
+    {
+        withContext(Dispatchers.IO)
+        {
+            CountriesStatDao.insert(countriesStat)
         }
     }
 

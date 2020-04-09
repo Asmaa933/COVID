@@ -6,15 +6,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
 import kotlinx.coroutines.CoroutineScope
 
 @Database(
-    entities = [StatByCountry::class],
+    entities = [StatByCountry::class, CountriesStat::class],
     version = 1
 )
 abstract class CovidDataBase : RoomDatabase() {
     abstract fun CountrystatDao(): CountrystatDao?
+    abstract fun CountriesStatDao(): CountriesStatDao?
     companion object {
 
         private const val DB_NAME = "COVID_database"
