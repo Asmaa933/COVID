@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allCounties_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+       />
+
+
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleLarge"
@@ -14,13 +22,5 @@
         android:layout_gravity="center"
      />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/upcomingTrips_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </FrameLayout>

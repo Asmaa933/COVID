@@ -7,7 +7,7 @@ import com.andro.retro.json_models.StatByCountry
 @Dao
 interface CountrystatDao {
     @Query("SELECT * FROM CountryState")
-    fun getAll(): LiveData<List<StatByCountry?>?>?
+    fun getAll(): LiveData<List<StatByCountry>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(StatByCountry: StatByCountry?)
