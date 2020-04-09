@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -68,14 +69,20 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
 
     // Room components
-    def room_version = "2.2.3"
+  /*  def room_version = "2.2.3"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor  "androidx.room:room-compiler:$room_version"
+    annotationProcessor  "androidx.room:room-compiler:$room_version"*/
 
-    // Lifecycle components
-    def lifecycle_version = "2.1.0"
+
+   /* def lifecycle_version = "2.1.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     annotationProcessor  "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"*/
 
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.0.0-alpha1"
+    // Room components
+    implementation "androidx.room:room-runtime:2.0.0-alpha1"
+    kapt "androidx.room:room-compiler:2.0.0-alpha1"
 }
