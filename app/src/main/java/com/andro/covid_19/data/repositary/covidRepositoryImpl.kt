@@ -9,8 +9,10 @@ import com.andro.covid_19.data.api_services.ApiHandler
 import com.andro.covid_19.data.db.CountriesStatDao
 import com.andro.covid_19.data.db.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
+import com.andro.covid_19.data.db.WorldTotalStatesDao
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
+import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +26,7 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
 
     private lateinit var CountrystatDao: CountrystatDao
     private lateinit var CountriesStatDao: CountriesStatDao
+    private lateinit var WorldTotalStatesDao: WorldTotalStatesDao
 
 
     private val ApiHandler: ApiHandler? = null
@@ -35,6 +38,7 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         if (database != null) {
             CountrystatDao = database.CountrystatDao()!!
             CountriesStatDao = database.CountriesStatDao()!!
+            WorldTotalStatesDao = database.WorldTotalStatesDao()!!
 
         }
        // AllStatByCountry = CountrystatDao.getAll()
@@ -61,20 +65,18 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         launch { InsertCountry(countriesStat) }
     }
 
-    override fun deleteCountry(movie: StatByCountry?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getWorldTotalStates(): LiveData<List<WorldTotalStates>> {
+        return WorldTotalStatesDao?.getAll()
+    }
+
+    override fun addWorldTotalStates(WorldTotalStates: WorldTotalStates) {
+        launch { InsertWorldTotalStates(WorldTotalStates) }
     }
 
     override fun searchCountry(query: String?): LiveData<List<StatByCountry?>?>? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-    /*private class InsertUserAsyncTask(CountrystatDao:CountrystatDao) : AsyncTask<StatByCountry, Unit, Unit>() {
-        val CountrystatDao = CountrystatDao
 
-        override fun doInBackground(vararg p0: StatByCountry?) {
-            CountrystatDao.insert(p0[0]!!)
-        }
-    }*/
     private suspend fun InsertCountry(StatByCountry: StatByCountry)
     {
         withContext(Dispatchers.IO)
@@ -87,6 +89,13 @@ class covidRepositoryImpl(context: Context): covidRepository,CoroutineScope
         withContext(Dispatchers.IO)
         {
             CountriesStatDao.insert(countriesStat)
+        }
+    }
+    private suspend fun InsertWorldTotalStates(worldTotalStates: WorldTotalStates)
+    {
+        withContext(Dispatchers.IO)
+        {
+            WorldTotalStatesDao.insert(worldTotalStates)
         }
     }
 

@@ -15,6 +15,7 @@ import com.andro.covid_19.data.api_services.ApiInterface
 import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
+import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.runBlocking
 
@@ -36,10 +37,9 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         save()
         homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {this.renderCountries(it)
-
             })
-
-
+       /* homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {this.renderWorldTotalStates(it.last())
+        })*/
 
             return root
 
@@ -55,26 +55,36 @@ class HomeFragment : Fragment() {
         allCounties_recyclerview.layoutManager = layoutManger
         allCounties_recyclerview.adapter = homeAdapter
     }
+    private fun renderWorldTotalStates(worldTotalStates:WorldTotalStates)
+    {
+        Log.d("myTag", ":WorldTotalStates")
+        tv_infected.text = worldTotalStates.total_cases
+        tv_death.text = worldTotalStates.total_deaths
+        tv_recovered.text = worldTotalStates.total_recovered
+    }
     private fun save()
     {
         val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
         val apiHandler = ApiHandler(api)
         runBlocking {
             apiHandler.getCaseByCountry()
+            apiHandler.getWorldTotalState()
         }
         apiHandler.allCountriesCases.observe(viewLifecycleOwner, Observer {
-            Log.d("myTag", "kjhgf"+it.toString())
+            Log.d("myTag", "kjhgf" + it.toString())
             val countries_stat = it.countries_stat
             Log.d("myTag", countries_stat.toString())
-            for ( i in 0..200)
-            {
+            for (i in 0..200) {
                 homeViewModel.setCountryinDataBase(countries_stat[i])
             }
-            //homeViewModel.setCountry(it)
-            //textView2.text = it.latest_stat_by_country[0].total_cases
-            //homeViewModel.setCountryinDataBase(CountriesStat("12","12","56","123","12","22","56","55","45","45"))
         })
+        apiHandler.worldState.observe(viewLifecycleOwner, Observer {
+            Log.d("myTag", it.toString())
+                homeViewModel.setWorldTotalStates(it)
 
+        })
+        homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {this.renderWorldTotalStates(it.last())
+        })
     }
 
 

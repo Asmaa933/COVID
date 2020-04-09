@@ -14,6 +14,7 @@ import com.andro.covid_19.data.repositary.covidRepository
 import com.andro.covid_19.data.repositary.covidRepositoryImpl
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
+import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.coroutines.runBlocking
 
 class HomeViewModel() : ViewModel() {
@@ -27,6 +28,8 @@ class HomeViewModel() : ViewModel() {
     fun setCountry(StatByCountry: StatByCountry)=repository.saveCountry(StatByCountry)
     fun getCountriesData()=repository.getAllCountry()
     fun setCountryinDataBase(countriesStat: CountriesStat)=repository.saveCountriesStat(countriesStat)
+    fun getWorldTotalStates()=repository.getWorldTotalStates()
+    fun setWorldTotalStates(worldTotalStates: WorldTotalStates)=repository.addWorldTotalStates(worldTotalStates)
 
 
 }
