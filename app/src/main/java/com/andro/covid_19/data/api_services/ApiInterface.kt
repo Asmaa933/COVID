@@ -18,38 +18,38 @@ interface ApiInterface {
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("affected.php")
-    fun getAffectedCountries(): Deferred<AllAffectedCountries>
+    fun getAffectedCountriesAsync(): Deferred<AllAffectedCountries>
 
     @Headers(
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("cases_by_country.php")
-    fun getCaseByCountry(): Deferred<CaseByCountry>
+    fun getCaseByCountryAsync(): Deferred<CaseByCountry>
 
     @Headers(
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("random_masks_usage_instructions.php")
-    fun getRandomInstruction(): Deferred<ResponseBody>
+    fun getRandomInstructionAsync(): Deferred<ResponseBody>
 
     @Headers(
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("latest_stat_by_country.php")
-    fun getSpecificCountryState(@Query("country") countryName: String): Deferred<SpecificCountryState>
+    fun getSpecificCountryStateAsync(@Query("country") countryName: String): Deferred<SpecificCountryState>
 
     @Headers(
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("worldstat.php")
-    fun getWorldTotalState(): Deferred<WorldTotalStates>
+    fun getWorldTotalStateAsync(): Deferred<WorldTotalStates>
 
     @Headers(
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("history_by_particular_country_by_date.php")
-    fun getHistoryForCountryinDate(@Query("country") countryName: String,
-                                   @Query("date") date: String): Deferred<HistoryOfCountry>
+    fun getHistoryForCountryInDateAsync(@Query("country") countryName: String,
+                                        @Query("date") date: String): Deferred<HistoryOfCountry>
 
 
     companion object {

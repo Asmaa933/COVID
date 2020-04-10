@@ -14,7 +14,10 @@ import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
+
 
 class HomeFragment : Fragment() {
 
@@ -22,23 +25,13 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
 
 
-    override fun onCreateView(
-
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-
-    ): View? {
-        HomeViewModel.context = this!!.context!!
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        HomeViewModel.context = this.context!!
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        save()
-        homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
-            this.renderCountries(it)
-        })
-        /* homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {this.renderWorldTotalStates(it.last())
-         })*/
+
+        setupObservers()
         setHasOptionsMenu(true)
 
         return root
@@ -47,7 +40,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun renderCountries(countries: List<CountriesStat>) {
-        progress_bar.setVisibility(View.GONE)
+        progress_bar.visibility = View.GONE
         homeAdapter = HomeAdapter(countries)
         val layoutManger = LinearLayoutManager(getActivity())
         //layoutManger.stackFromEnd = true
@@ -55,37 +48,39 @@ class HomeFragment : Fragment() {
         allCounties_recyclerview.adapter = homeAdapter
     }
 
-    private fun renderWorldTotalStates(worldTotalStates: WorldTotalStates) {
-        Log.d("myTag", ":WorldTotalStates")
-        tv_infected.text = worldTotalStates.total_cases
-        tv_death.text = worldTotalStates.total_deaths
-        tv_recovered.text = worldTotalStates.total_recovered
+    private fun renderWorldTotalStates(worldTotalStates: List<WorldTotalStates>) {
+        tv_infected.text = worldTotalStates[0].total_cases
+        tv_death.text = worldTotalStates[0].total_deaths
+        tv_recovered.text = worldTotalStates[0].total_recovered
     }
 
-    private fun save() {
-        val api = ApiInterface(ConnectivityInterceptorImpl(context!!))
-        val apiHandler = ApiHandler(api)
-        runBlocking {
-            apiHandler.getCaseByCountry()
-            apiHandler.getWorldTotalState()
-        }
-        apiHandler.allCountriesCases.observe(viewLifecycleOwner, Observer {
-            Log.d("myTag", "kjhgf" + it.toString())
-            val countries_stat = it.countries_stat
-            Log.d("myTag", countries_stat.toString())
-            for (i in 0..200) {
-                homeViewModel.setCountryinDataBase(countries_stat[i])
-            }
-        })
-        apiHandler.worldState.observe(viewLifecycleOwner, Observer {
-            Log.d("myTag", it.toString())
-            homeViewModel.setWorldTotalStates(it)
-            homeViewModel.getWorldTotalStates()
-                .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-                    this.renderWorldTotalStates(it.last())
-                })
 
-        })
+
+    private fun setupObservers() {
+
+//                   homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+//                       renderCountries(it)
+//                   })
+
+           homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
+                   renderWorldTotalStates(it)
+               })
+//         val api = ApiInterface(ConnectivityInterceptorImpl(HomeViewModel.context))
+//         val apiHandler = ApiHandler(api)
+//        runBlocking {
+//
+//            apiHandler.getWorldTotalState()
+//        }
+////
+//        apiHandler.worldState.observe(viewLifecycleOwner, Observer {
+//            Log.d("myTag", it.toString())
+//            homeViewModel.setWorldTotalStates(it)
+//            homeViewModel.getWorldTotalStates()
+//                .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
+//                    this.renderWorldTotalStates(it)
+//                })
+//
+//        })
 
     }
 

@@ -1,19 +1,13 @@
 package com.andro.covid_19
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.andro.covid_19.ui.gallery.GalleryFragment
+import com.andro.covid_19.ui.History.HistoryFragment
 import com.andro.covid_19.ui.home.HomeFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -58,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.nav_host_fragment, selectedFregment).commit()
                 }
                 R.id.nav_gallery -> {
-                    selectedFregment =GalleryFragment()
+                    selectedFregment =HistoryFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.nav_host_fragment, selectedFregment).commit()
                 }

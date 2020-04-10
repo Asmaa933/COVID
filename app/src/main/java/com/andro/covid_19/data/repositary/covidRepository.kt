@@ -10,7 +10,7 @@ interface covidRepository {
      fun getSavedCountry(): LiveData<List<StatByCountry>>
     fun saveCountry(StatByCountry: StatByCountry)
 
-    fun getAllCountry(): LiveData<List<CountriesStat>>
+    fun getAllCountriesState(): LiveData<List<CountriesStat>>
     fun saveCountriesStat(CountriesStat: CountriesStat)
 
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>>
