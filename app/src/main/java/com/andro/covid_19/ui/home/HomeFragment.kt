@@ -26,7 +26,11 @@ class HomeFragment : Fragment() {
     private lateinit var homeAdapter: HomeAdapter
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         HomeViewModel.context = this.context!!
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
@@ -59,35 +63,17 @@ class HomeFragment : Fragment() {
     }
 
 
-
     private fun setupObservers() {
 
-                   homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
-                       renderCountries(it)
-                   })
-GlobalScope.launch(Dispatchers.Main) {
-    homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-        renderWorldTotalStates(it)
-    })
-}
-
-//         val api = ApiInterface(ConnectivityInterceptorImpl(HomeViewModel.context))
-//         val apiHandler = ApiHandler(api)
-//        runBlocking {
-//
-//            apiHandler.getWorldTotalState()
-//        }
-////
-//        apiHandler.worldState.observe(viewLifecycleOwner, Observer {
-//            Log.d("myTag", it.toString())
-//            homeViewModel.setWorldTotalStates(it)
-//            homeViewModel.getWorldTotalStates()
-//                .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-//                    this.renderWorldTotalStates(it)
-//                })
-//
-//        })
-
+        homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+            renderCountries(it)
+        })
+        GlobalScope.launch(Dispatchers.Main) {
+            homeViewModel.getWorldTotalStates()
+                .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
+                    renderWorldTotalStates(it)
+                })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -106,7 +92,6 @@ GlobalScope.launch(Dispatchers.Main) {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }
