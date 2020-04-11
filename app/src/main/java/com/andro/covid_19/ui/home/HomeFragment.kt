@@ -14,6 +14,7 @@ import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.launch
@@ -33,6 +34,9 @@ class HomeFragment : Fragment() {
 
         setupObservers()
         setHasOptionsMenu(true)
+
+
+
 
         return root
 
@@ -58,13 +62,15 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
 
-//                   homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
-//                       renderCountries(it)
-//                   })
+                   homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+                       renderCountries(it)
+                   })
+GlobalScope.launch(Dispatchers.Main) {
+    homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
+        renderWorldTotalStates(it)
+    })
+}
 
-           homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-                   renderWorldTotalStates(it)
-               })
 //         val api = ApiInterface(ConnectivityInterceptorImpl(HomeViewModel.context))
 //         val apiHandler = ApiHandler(api)
 //        runBlocking {

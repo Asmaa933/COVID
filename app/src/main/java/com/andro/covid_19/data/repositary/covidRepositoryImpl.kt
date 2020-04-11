@@ -7,6 +7,7 @@ import com.andro.covid_19.data.db.CountriesStatDao
 import com.andro.covid_19.data.db.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
 import com.andro.covid_19.data.db.WorldTotalStatesDao
+import com.andro.retro.json_models.AllAffectedCountries
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
 import com.andro.retro.json_models.WorldTotalStates
@@ -34,15 +35,24 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
 
         }
         apiHandler.apply {
-            //            allCountriesCases.observeForever { newAllCountriesState ->
-//                val countries_stat = newAllCountriesState.countries_stat
-//                for (i in 1 until countries_stat.size) {
-//                    saveCountriesStat(newAllCountriesState.countries_stat[i]) }
-//                }
+                        allCountriesCases.observeForever { newAllCountriesState ->
+                val countries_stat = newAllCountriesState.countries_stat
+                for (i in countries_stat.indices) {
+                    if(newAllCountriesState.countries_stat[i].country_name != ""){
+                        saveCountriesStat(newAllCountriesState.countries_stat[i]) }
+                }
+                    }
+
+
             worldState.observeForever {
                 addWorldTotalStates(it)
             }
+            allAffectedCountries.observeForever {  }
+            countryHistoryInDate.observeForever {
+                print("hello")
+            }
         }
+
     }
 
     // get all countries states
@@ -90,29 +100,14 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
 
 
 
-
-
-    override fun getSavedCountry(): LiveData<List<StatByCountry>> {
-        return countrystatDao?.getAll()
+    override fun getAffectedCountries(): LiveData<AllAffectedCountries> {
+        launch {  apiHandler.getAffectedCountries() }
+        return apiHandler.allAffectedCountries
     }
 
-
-    override fun saveCountry(StatByCountry: StatByCountry) {
-        // val insertUserAsyncTask = InsertUserAsyncTask(CountrystatDao).execute(StatByCountry)
-        launch { InsertCountry(StatByCountry) }
-
-    }
-
-
-    override fun searchCountry(query: String?): LiveData<List<StatByCountry?>?>? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private suspend fun InsertCountry(StatByCountry: StatByCountry) {
-        withContext(Dispatchers.IO)
-        {
-            countrystatDao.insert(StatByCountry)
-        }
+    override fun getHistoryForCountry(countryName: String, date: String): LiveData<StatByCountry> {
+    launch {  apiHandler.getHistoryForCountryInDate(countryName , date) }
+        return apiHandler.countryHistoryInDate
     }
 
 

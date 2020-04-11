@@ -1,6 +1,7 @@
 package com.andro.covid_19
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -51,10 +52,15 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.nav_host_fragment, selectedFregment).commit()
                 }
-                R.id.nav_gallery -> {
-                    selectedFregment =HistoryFragment()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, selectedFregment).commit()
+                R.id.nav_history -> {
+                    if(isNetworkConnected(this)){
+                        selectedFregment =HistoryFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment, selectedFregment).commit()
+                    }
+                    else{
+                        Toast.makeText(this,getString(R.string.check_connection),Toast.LENGTH_LONG).show()
+                    }
                 }
             }
             drawerLayout.closeDrawers()
