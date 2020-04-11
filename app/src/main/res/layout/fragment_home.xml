@@ -219,9 +219,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allCounties_recyclerview"
-        android:layout_width="401dp"
+        android:layout_width="match_parent"
         android:layout_height="536dp"
         android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

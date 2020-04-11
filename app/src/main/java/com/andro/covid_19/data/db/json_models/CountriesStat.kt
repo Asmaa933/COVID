@@ -1,10 +1,11 @@
 package com.andro.retro.json_models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "CountriesStat")
-data class CountriesStat(
+data class CountriesStat (
     val active_cases: String?,
     val cases: String?,
     @PrimaryKey

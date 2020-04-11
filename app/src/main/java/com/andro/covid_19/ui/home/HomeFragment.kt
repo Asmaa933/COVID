@@ -1,29 +1,30 @@
 package com.andro.covid_19.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andro.covid_19.R
-import com.andro.covid_19.data.api_services.ApiHandler
-import com.andro.covid_19.data.api_services.ApiInterface
-import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
+import com.andro.covid_19.ui.map.MapFragment
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.WorldTotalStates
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
+    private var Mapcountries: List<CountriesStat> = ArrayList<CountriesStat>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,6 +47,7 @@ class HomeFragment : Fragment() {
     private fun renderCountries(countries: List<CountriesStat>) {
         progress_bar.visibility = View.GONE
         homeAdapter = HomeAdapter(countries)
+        Mapcountries = countries
         val layoutManger = LinearLayoutManager(getActivity())
         //layoutManger.stackFromEnd = true
         allCounties_recyclerview.layoutManager = layoutManger
@@ -62,31 +64,12 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
 
-                   homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
-                       renderCountries(it)
+        homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
                    })
-GlobalScope.launch(Dispatchers.Main) {
-    homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-        renderWorldTotalStates(it)
+        GlobalScope.launch(Dispatchers.Main) {
+             homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
     })
 }
-
-//         val api = ApiInterface(ConnectivityInterceptorImpl(HomeViewModel.context))
-//         val apiHandler = ApiHandler(api)
-//        runBlocking {
-//
-//            apiHandler.getWorldTotalState()
-//        }
-////
-//        apiHandler.worldState.observe(viewLifecycleOwner, Observer {
-//            Log.d("myTag", it.toString())
-//            homeViewModel.setWorldTotalStates(it)
-//            homeViewModel.getWorldTotalStates()
-//                .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
-//                    this.renderWorldTotalStates(it)
-//                })
-//
-//        })
 
     }
 
@@ -99,10 +82,14 @@ GlobalScope.launch(Dispatchers.Main) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.mapButton) {
-//            if (trips != null && !trips.isEmpty()) {
-//
-//            }
-//            return true
+            val bundle = Bundle()
+            val fragment: Fragment = MapFragment()
+            val fragmentManager: FragmentManager = activity!!.supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+
         }
         return super.onOptionsItemSelected(item)
     }
