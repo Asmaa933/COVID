@@ -12,9 +12,6 @@ interface CountrystatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(StatByCountry: StatByCountry?)
 
-    @Query("DELETE FROM CountryState")
-    fun deleteAll()
 
-    @Update
-    fun updateMovie(StatByCountry:StatByCountry?)
+
 }

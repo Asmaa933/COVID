@@ -16,15 +16,13 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
-    private var Mapcountries: List<CountriesStat> = ArrayList<CountriesStat>()
+    private var Mapcountries: ArrayList<CountriesStat> = ArrayList<CountriesStat>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,9 +34,6 @@ class HomeFragment : Fragment() {
         setupObservers()
         setHasOptionsMenu(true)
 
-
-
-
         return root
 
 
@@ -47,7 +42,7 @@ class HomeFragment : Fragment() {
     private fun renderCountries(countries: List<CountriesStat>) {
         progress_bar.visibility = View.GONE
         homeAdapter = HomeAdapter(countries)
-        Mapcountries = countries
+        Mapcountries = countries as ArrayList<CountriesStat>
         val layoutManger = LinearLayoutManager(getActivity())
         //layoutManger.stackFromEnd = true
         allCounties_recyclerview.layoutManager = layoutManger
@@ -64,11 +59,22 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
 
-        homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
-                   })
-        GlobalScope.launch(Dispatchers.Main) {
-             homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
-    })
+       // if(homeViewModel.getCountriesData().value != null)
+       // {
+            homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
+            })
+       // }
+
+       // if(homeViewModel.getWorldTotalStates().value != null) {
+            GlobalScope.launch(Dispatchers.Main) {
+                homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
+                })
+
+       // }
+
+
+
+
 }
 
     }
@@ -82,18 +88,20 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.mapButton) {
-            val bundle = Bundle()
-            val fragment: Fragment = MapFragment()
+            /*val bundle = Bundle().also {
+                it.putSerializable("Mapcountries", Mapcountries)
+            }*/
+            val mapFragment: Fragment = MapFragment()
+           // MapFragment.arguments = bundle
             val fragmentManager: FragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.nav_host_fragment, fragment)
+            fragmentTransaction.replace(R.id.nav_host_fragment,  mapFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
 
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 }

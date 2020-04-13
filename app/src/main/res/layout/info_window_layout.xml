@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="6dp"
+    android:paddingEnd="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingStart="8dp"
+    android:background="@color/cardview_shadow_end_color">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/info_window_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Bubble title" />
+
+        <TextView
+            android:id="@+id/info_window_cases"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/info_window_title"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="Bubble description" />
+        <TextView
+            android:id="@+id/info_window_deaths"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/info_window_cases"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="Bubble description" />
+        <TextView
+            android:id="@+id/info_window_recover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/info_window_deaths"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            tools:text="Bubble description" />
+
+    </LinearLayout>
+</LinearLayout>

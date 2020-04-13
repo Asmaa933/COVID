@@ -1,8 +1,8 @@
 package com.andro.covid_19.ui.map
 
-import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,10 +16,12 @@ import com.andro.retro.json_models.CountriesStat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.map_fragment.*
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnInfoWindowClickListener {
 
     companion object {
         fun newInstance() = MapFragment()
@@ -34,11 +36,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val root=  inflater.inflate(R.layout.map_fragment, container, false)
         MapViewModel.context = this.context!!
         viewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
-        viewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
-            putEfectedCountries(it,it.indices)
 
 
-        })
+
         return root
     }
 
@@ -48,33 +48,123 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView.onResume()
         mapView.getMapAsync(this)
 
+
+
     }
 
     override fun onMapReady(map: GoogleMap?) {
         map?.let {
             googleMap = it
         }
+        googleMap.setOnMapLoadedCallback(this)
+
+
     }
-    fun putEfectedCountries(countries: List<CountriesStat>,size:IntRange)
-    {
 
-        for(i in size)
+    private fun putEffectedCountries(countries: List<CountriesStat>, size:IntRange) {
+
+        for (i in size) {
+            putEfectedCountriesAsync().execute(countries[i])
+        }
+    }
+            /*private fun putEfectedCountries(countries: List<CountriesStat>, size:IntRange)
+             {
+
+                     for (i in size) {
+
+                               Log.i("my", countries[i].country_name)
+                              var gc = Geocoder(context?.applicationContext)
+                              val addresses: List<Address> = try {
+                               gc.getFromLocationName(countries[i].country_name, 3)
+                                } catch (e: Exception) {
+                                       ArrayList<Address>()
+                                }
+                             if (addresses.isNotEmpty()) {
+                             //var title:String = "Country Name : "+countries[i].country_name+"\nConfirm : "+countries[i].cases+"\nDeath : "+countries[i].deaths+"\nRecover : "+countries[i].total_recovered
+
+                                 googleMap.addMarker(
+                                     MarkerOptions().position(
+                                         LatLng(
+                                             addresses.get(addresses.size - 1).latitude,
+                                             addresses.get(addresses.size - 1).longitude
+                                         )
+                                     ).title("Country Name : " + countries[i].country_name).snippet("Confirm : " + countries[i].cases)
+                                 )
+                             }
+
+
+
+
+
+                     }
+
+
+             }*/
+       /* suspend fun lengthyOperation(country_name:String): LatLng?
         {
-            Log.i("my",countries[i].country_name)
-           var gc = Geocoder(context?.applicationContext)
+            var gc = Geocoder(context?.applicationContext)
             val addresses: List<Address> = try {
-            gc.getFromLocationName(countries[i].country_name, 3)
-        } catch (e: Exception) {
+                gc.getFromLocationName(country_name, 3)
+            } catch (e: Exception) {
                 ArrayList<Address>()
+            }
+            if (addresses.isNotEmpty()) {
+                 return LatLng(
+                    addresses.get(addresses.size - 1).latitude,
+                    addresses.get(addresses.size - 1).longitude
+                )
+            }
+            return null
+        }*/
+
+
+
+    override fun onMapLoaded() {
+                viewModel.getCountriesData()
+                    .observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+
+                            putEffectedCountries(it, it.indices)
+
+                    })
+
+    }
+    private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>() {
+
+        var CountriesStat:CountriesStat? = null
+        override fun doInBackground(vararg params: CountriesStat?): List<Address> {
+            var gc = Geocoder(context?.applicationContext)
+            val addresses: List<Address> = try {
+                gc.getFromLocationName(params[0]?.country_name, 3)
+            } catch (e: Exception) {
+                ArrayList<Address>()
+            }
+            CountriesStat = params[0]
+            return  addresses
         }
-            if (addresses.isNotEmpty()){
-                //var title:String = "Country Name : "+countries[i].country_name+"\nConfirm : "+countries[i].cases+"\nDeath : "+countries[i].deaths+"\nRecover : "+countries[i].total_recovered
-                    googleMap.addMarker(MarkerOptions().position(LatLng(addresses.get(addresses.size-1).latitude, addresses.get(addresses.size-1).longitude)).title("Country Name : "+countries[i].country_name ).snippet("Confirm : "+countries[i].cases))
-
-                }
 
 
+        override fun onPostExecute(result: List<Address>) {
+            super.onPostExecute(result)
+            if (result.isNotEmpty()) {
+                val markerInfoWindowAdapter =
+                    InfoWindowAdapter(context?.applicationContext,CountriesStat?.country_name,CountriesStat?.cases,CountriesStat?.deaths,CountriesStat?.total_recovered)
+                googleMap.setInfoWindowAdapter(markerInfoWindowAdapter)
+              //  var snippet:String = "\nConfirm : "+CountriesStat?.cases+"\nDeath : "+CountriesStat?.deaths+"\nRecover : "+CountriesStat?.total_recovered
+                googleMap.addMarker(
+                    MarkerOptions().position(
+                        LatLng(
+                            result.get(result.size - 1).latitude,
+                            result.get(result.size - 1).longitude
+                        )
+                    )
+                )
+            }
         }
+
+
+    }
+
+    override fun onInfoWindowClick(p0: Marker?) {
 
     }
 

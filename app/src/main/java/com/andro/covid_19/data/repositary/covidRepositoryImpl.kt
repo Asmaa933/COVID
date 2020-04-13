@@ -63,6 +63,10 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
         return countriesStatDao.getAll()
     }
 
+    override fun getAllCountriesStatefromRom(): LiveData<List<CountriesStat>> {
+        return countriesStatDao.getAll()
+    }
+
 
     override fun saveCountriesStat(countriesStat: CountriesStat) {
         launch {

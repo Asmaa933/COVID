@@ -18,5 +18,5 @@ class MapViewModel : ViewModel() {
     private val apiHandler = ApiHandler(api)
     private var repository: covidRepository = covidRepositoryImpl(context,apiHandler)
 
-    fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesState()
+    fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesStatefromRom()
 }

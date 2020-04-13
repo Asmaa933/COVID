@@ -8,16 +8,26 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/covid_splash"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/coronavirusapplogo"
+        android:src="@drawable/virus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/coronavirusapplogo" />
-    <!-- app:srcCompat="@drawable/corona_white"-->
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="98dp"
+        android:gravity="center"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:text="@string/Covid_19" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
