@@ -12,6 +12,7 @@ import com.andro.covid_19.R
 import com.andro.covid_19.ui.map.MapFragment
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.WorldTotalStates
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,12 +28,23 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HomeViewModel.context = this.context!!
-
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-
-        setupObservers()
+        setupObserversBasedNatwork()
+       // setupObserversBasedRoom()
         setHasOptionsMenu(true)
+      /* fabRefresh.setOnClickListener { view ->
+           // if (! homeViewModel.isOnline())
+           // {
+                Snackbar.make(view, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+           // }
+          //  else
+           // {
+             //   setupObserversBasedNatwork()
+           // }
+
+        }*/
 
         return root
 
@@ -57,7 +69,7 @@ class HomeFragment : Fragment() {
 
 
 
-    private fun setupObservers() {
+    private fun setupObserversBasedNatwork() {
 
        // if(homeViewModel.getCountriesData().value != null)
        // {
@@ -76,6 +88,13 @@ class HomeFragment : Fragment() {
 
 
 }
+
+    }
+    private fun setupObserversBasedRoom() {
+
+        homeViewModel.getCountriesDatafromRom().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
+        })
+
 
     }
 

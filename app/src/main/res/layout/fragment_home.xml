@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:background="#4E7150">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -17,15 +18,31 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Data provided by: ASd"
-            android:visibility="gone" />
+            android:orientation="horizontal"
+            android:weightSum="4"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="3.75"
+                android:textAlignment="center"
+                android:text="@string/Data_provided_by"
+                android:textColor="@color/white"
+                tools:ignore="RtlCompat" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabRefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="0.25"
+                app:srcCompat="@android:drawable/stat_notify_sync" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llTotalData"
@@ -142,6 +159,7 @@
                     app:autoSizeMinTextSize="10sp" />
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 
@@ -151,10 +169,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/allCounties_recyclerview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:background="@drawable/border">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -168,6 +188,7 @@
             android:text="@string/country"
             android:textAlignment="textStart"
             android:textSize="16sp"
+            android:textColor="@color/white"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="10sp" />
 
@@ -181,6 +202,7 @@
             android:layout_weight="0.6"
             android:minLines="1"
             android:text="@string/confirm"
+            android:textColor="@color/white"
             android:textAlignment="textEnd"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
@@ -196,6 +218,7 @@
             android:layout_weight="0.6"
             android:minLines="1"
             android:text="@string/death"
+            android:textColor="@color/white"
             android:textAlignment="textEnd"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
@@ -211,6 +234,7 @@
             android:layout_weight="0.6"
             android:minLines="1"
             android:text="@string/recover"
+            android:textColor="@color/white"
             android:textAlignment="textEnd"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"

@@ -128,7 +128,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
                     })
 
     }
-    private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>() {
+    private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>(){
 
         var CountriesStat:CountriesStat? = null
         override fun doInBackground(vararg params: CountriesStat?): List<Address> {
@@ -146,9 +146,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         override fun onPostExecute(result: List<Address>) {
             super.onPostExecute(result)
             if (result.isNotEmpty()) {
-                val markerInfoWindowAdapter =
-                    InfoWindowAdapter(context?.applicationContext,CountriesStat?.country_name,CountriesStat?.cases,CountriesStat?.deaths,CountriesStat?.total_recovered)
-                googleMap.setInfoWindowAdapter(markerInfoWindowAdapter)
+                googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
               //  var snippet:String = "\nConfirm : "+CountriesStat?.cases+"\nDeath : "+CountriesStat?.deaths+"\nRecover : "+CountriesStat?.total_recovered
                 googleMap.addMarker(
                     MarkerOptions().position(
@@ -156,7 +154,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
                             result.get(result.size - 1).latitude,
                             result.get(result.size - 1).longitude
                         )
-                    )
+                    ).title(CountriesStat?.cases).snippet(CountriesStat?.deaths+","+CountriesStat?.total_recovered)
                 )
             }
         }

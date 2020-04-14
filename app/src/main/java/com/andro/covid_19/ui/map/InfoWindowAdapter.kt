@@ -9,22 +9,26 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
 
-class InfoWindowAdapter (internal var context: Context?,  internal val cName: String?, internal val Ccases: String?, internal val Cdeath : String?,internal val Crecover : String?) : GoogleMap.InfoWindowAdapter {
+class InfoWindowAdapter (internal var context: Context?) : GoogleMap.InfoWindowAdapter {
     internal lateinit var inflater: LayoutInflater
     override fun getInfoContents(p0: Marker?): View? {
         return null
     }
 
-    override fun getInfoWindow(p0: Marker?): View {
+    override fun getInfoWindow(marker: Marker?): View {
         inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val v = inflater.inflate(R.layout.info_window_layout, null)
-        val title = v.findViewById(R.id.info_window_title) as TextView
         val cases = v.findViewById(R.id.info_window_cases) as TextView
         val death = v.findViewById(R.id.info_window_deaths) as TextView
         val recover = v.findViewById(R.id.info_window_recover) as TextView
-        cases.text = "Cases: "+Ccases
-        death.text = "Deaths : "+Cdeath
-        recover.text = "Recovers : "+ Crecover
+        cases.text =  "Cases : "+marker?.title
+        if(marker?.snippet != null)
+        {
+            val parts: List<String> = marker?.snippet!!.split(",")
+            death.text = "Deaths: "+parts[0]
+            recover.text = "Recovers: "+parts[1]
+        }
+
 
 
         return v

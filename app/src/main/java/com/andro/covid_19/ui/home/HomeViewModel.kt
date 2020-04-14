@@ -1,6 +1,7 @@
 package com.andro.covid_19.ui.home
 
 import android.content.Context
+import android.net.ConnectivityManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.andro.covid_19.data.api_services.ApiHandler
@@ -24,7 +25,15 @@ class HomeViewModel() : ViewModel() {
 
 
     fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesState()
+    fun getCountriesDatafromRom(): LiveData<List<CountriesStat>> = repository.getAllCountriesStatefromRom()
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>> = repository.getWorldTotalStates()
+
+    fun isOnline(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
+                as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
+    }
 
 
 

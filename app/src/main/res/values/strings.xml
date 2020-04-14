@@ -2,7 +2,7 @@
     <string name="app_name">COVID-19</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Covid-19 Tracker</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -24,5 +24,7 @@
 
     <string name="home_second">Home Second</string>
     <string name="check_connection">Check internet connection</string>
-    <string name="Covid_19">Covid - 19</string>
+    <string name="updates">Updates </string>
+    <string name="Covid_19">Covid - 19 </string>
+    <string name="Data_provided_by">Data provided by: Coronavirus monitor</string>
 </resources>
