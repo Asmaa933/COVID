@@ -12,16 +12,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.andro.covid_19.R
+import com.andro.covid_19.isNetworkConnected
 import com.andro.retro.json_models.CountriesStat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.map_fragment.*
 
 
-class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnInfoWindowClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback{
 
     companion object {
         fun newInstance() = MapFragment()
@@ -47,6 +50,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
+        if (!isNetworkConnected(activity!!))
+        {
+            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
 
 
@@ -58,6 +66,17 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         }
         googleMap.setOnMapLoadedCallback(this)
 
+        fab.setOnClickListener {
+            if (isNetworkConnected(activity!!))
+            {
+                loadMarker()
+            }
+            else
+            {
+                Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
 
     }
 
@@ -67,66 +86,21 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             putEfectedCountriesAsync().execute(countries[i])
         }
     }
-            /*private fun putEfectedCountries(countries: List<CountriesStat>, size:IntRange)
-             {
-
-                     for (i in size) {
-
-                               Log.i("my", countries[i].country_name)
-                              var gc = Geocoder(context?.applicationContext)
-                              val addresses: List<Address> = try {
-                               gc.getFromLocationName(countries[i].country_name, 3)
-                                } catch (e: Exception) {
-                                       ArrayList<Address>()
-                                }
-                             if (addresses.isNotEmpty()) {
-                             //var title:String = "Country Name : "+countries[i].country_name+"\nConfirm : "+countries[i].cases+"\nDeath : "+countries[i].deaths+"\nRecover : "+countries[i].total_recovered
-
-                                 googleMap.addMarker(
-                                     MarkerOptions().position(
-                                         LatLng(
-                                             addresses.get(addresses.size - 1).latitude,
-                                             addresses.get(addresses.size - 1).longitude
-                                         )
-                                     ).title("Country Name : " + countries[i].country_name).snippet("Confirm : " + countries[i].cases)
-                                 )
-                             }
-
-
-
-
-
-                     }
-
-
-             }*/
-       /* suspend fun lengthyOperation(country_name:String): LatLng?
-        {
-            var gc = Geocoder(context?.applicationContext)
-            val addresses: List<Address> = try {
-                gc.getFromLocationName(country_name, 3)
-            } catch (e: Exception) {
-                ArrayList<Address>()
-            }
-            if (addresses.isNotEmpty()) {
-                 return LatLng(
-                    addresses.get(addresses.size - 1).latitude,
-                    addresses.get(addresses.size - 1).longitude
-                )
-            }
-            return null
-        }*/
 
 
 
     override fun onMapLoaded() {
-                viewModel.getCountriesData()
-                    .observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+        loadMarker()
 
-                            putEffectedCountries(it, it.indices)
+    }
+    fun loadMarker()
+    {
+        viewModel.getCountriesData()
+            .observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
 
-                    })
+                putEffectedCountries(it, it.indices)
 
+            })
     }
     private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>(){
 
@@ -162,9 +136,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
 
     }
 
-    override fun onInfoWindowClick(p0: Marker?) {
 
-    }
 
 }
 

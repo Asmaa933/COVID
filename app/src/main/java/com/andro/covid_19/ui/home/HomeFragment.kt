@@ -2,6 +2,7 @@ package com.andro.covid_19.ui.home
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andro.covid_19.R
+import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.map.MapFragment
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.WorldTotalStates
@@ -30,25 +32,37 @@ class HomeFragment : Fragment() {
         HomeViewModel.context = this.context!!
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        setupObserversBasedNatwork()
+
        // setupObserversBasedRoom()
         setHasOptionsMenu(true)
-      /* fabRefresh.setOnClickListener { view ->
-           // if (! homeViewModel.isOnline())
-           // {
-                Snackbar.make(view, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-           // }
-          //  else
-           // {
-             //   setupObserversBasedNatwork()
-           // }
+        setupObserversBasedNatwork()
 
-        }*/
+
+
 
         return root
 
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        swipeRefreshLayout.setOnRefreshListener {
+            if (isNetworkConnected(activity!!))
+            {
+                setupObserversBasedNatwork()
+            }
+            else
+            {
+                Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                swipeRefreshLayout.isRefreshing = false
+            }
+
+
+
+        }
     }
 
     private fun renderCountries(countries: List<CountriesStat>) {
@@ -62,29 +76,27 @@ class HomeFragment : Fragment() {
     }
 
     private fun renderWorldTotalStates(worldTotalStates: List<WorldTotalStates>) {
-        tv_infected.text = worldTotalStates[0].total_cases
-        tv_death.text = worldTotalStates[0].total_deaths
-        tv_recovered.text = worldTotalStates[0].total_recovered
+        if(worldTotalStates.isNotEmpty())
+        {
+            tv_infected.text = worldTotalStates[0].total_cases
+            tv_death.text = worldTotalStates[0].total_deaths
+            tv_recovered.text = worldTotalStates[0].total_recovered
+        }
+
     }
 
 
 
     private fun setupObserversBasedNatwork() {
 
-       // if(homeViewModel.getCountriesData().value != null)
-       // {
             homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
             })
-       // }
-
-       // if(homeViewModel.getWorldTotalStates().value != null) {
             GlobalScope.launch(Dispatchers.Main) {
                 homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
                 })
 
-       // }
 
-
+                swipeRefreshLayout.isRefreshing = false
 
 
 }

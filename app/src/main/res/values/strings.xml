@@ -27,4 +27,7 @@
     <string name="updates">Updates </string>
     <string name="Covid_19">Covid - 19 </string>
     <string name="Data_provided_by">Data provided by: Coronavirus monitor</string>
+    <string name="Check_you_connection">Check you network connection</string>
+    <string name="chooseCountry">"Choose Country : "</string>
+    <string name="choose_date">Choose Date : </string>
 </resources>
