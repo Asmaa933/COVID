@@ -26,7 +26,7 @@ import kotlin.collections.ArrayList
 
 
 class HistoryFragment : Fragment() {
-    private var countryName: String? = null
+    private var countryName: String = "USA"
     private var date: String? = null
     private lateinit var historyViewModel: HistoryViewModel
 
@@ -41,28 +41,34 @@ class HistoryFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
-
-
-
-        historyViewModel.getAllAffectedCountries()
-            .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
-                val array: ArrayList<String> = ArrayList()
-                for (i in 0 until it.affected_countries.size - 1) {
-                    countryName = it.affected_countries[1]
-                    if (!it.affected_countries[i].equals("")) {
-                        array?.add(it.affected_countries[i])
-                    }
-                }
-                array?.let { it1 -> setupSearch(it1) }
-
-            })
-
-
-
-
-
         return root
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (isNetworkConnected(activity!!)) {
+
+            historyViewModel.getAllAffectedCountries()
+                .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
+                    val array: ArrayList<String> = ArrayList()
+                    for (i in 0 until it.affected_countries.size - 1) {
+                        countryName = it.affected_countries[1]
+                        if (!it.affected_countries[i].equals("")) {
+                            array?.add(it.affected_countries[i])
+                        }
+                    }
+                    array?.let { it1 -> setupSearch(it1) }
+
+                })
+
+        }else
+        {
+            history_layout.visibility = View.INVISIBLE
+            no_connection.visibility = View.VISIBLE
+        }
+    }
+
+
 
 
     private fun setupSearch(countriesArr: List<String>) {
@@ -72,7 +78,7 @@ class HistoryFragment : Fragment() {
 
         var adapter = ArrayAdapter(
             activity!!,
-            R.layout.support_simple_spinner_dropdown_item,
+            R.layout.my_spinner_item,
             countriesArr
         )
         spinner.adapter = adapter
@@ -90,20 +96,21 @@ class HistoryFragment : Fragment() {
             searchButton.setOnClickListener {
                 if (isNetworkConnected(activity!!)) {
                     enableViews(false)
-                    historyProgressBar.visibility = View.VISIBLE
-                    if (date != null) {
+                    progress_bar.visibility = View.VISIBLE
+                    if (date != null&&countryName!=null) {
                         historyViewModel.getHistoryForCountry(
                             countryName!!,
-                            dateTxt.text.toString()
+                            showDateTxt.text.toString()
                         )
                             .observe(viewLifecycleOwner, Observer<StatByCountry> {
                                 if (it != null) {
                                     cardView.visibility = View.VISIBLE
                                     newCasesTxt.text = it.new_cases
-                                    deathTxt.text = it.new_deaths
+                                    newDeathsTxt.text = it.new_deaths
                                     recoverdTxt.text = it.total_recovered
                                     totalTxt.text = it.total_cases
-                                    historyProgressBar.visibility = View.GONE
+                                    deathTxt.text = it.total_deaths
+                                    progress_bar.visibility = View.GONE
                                     enableViews(true)
                                 } else {
                                     cardView.visibility = View.GONE
@@ -114,15 +121,13 @@ class HistoryFragment : Fragment() {
                     } else {
                         Toast.makeText(activity!!, "choose date for search", Toast.LENGTH_LONG)
                             .show()
-                        historyProgressBar.visibility = View.GONE
+                        progress_bar.visibility = View.GONE
                         enableViews(true)
                     }
                 } else {
-                    Toast.makeText(
-                        activity!!,
-                        getString(R.string.check_connection),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    history_layout.visibility = View.INVISIBLE
+
+                    no_connection.visibility = View.VISIBLE
 
                 }
 
@@ -148,7 +153,7 @@ class HistoryFragment : Fragment() {
                 choosenDate.set(Calendar.MONTH, monthOfYear)
                 choosenDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 date = format.format(choosenDate.time)
-                dateTxt.text = date
+                showDateTxt.text = date
             }, mYear, mMonth, mDay
         )
         val cal = Calendar.getInstance()

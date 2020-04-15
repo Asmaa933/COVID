@@ -10,5 +10,9 @@
     <color name="home_color"> #4E7150</color>
     <color name="black_night">#121212</color>
     <color name="white_night">#ffffff</color>
+    <color name="confirm"> #FF9800</color>
+    <color name="death">#FF0000</color>
+    <color name="recover">#20BE25</color>
+
 
 </resources>
