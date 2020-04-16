@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
@@ -105,12 +106,14 @@ class SettingsFragment : Fragment() {
 
         }
         saveBtn.setOnClickListener {
-            val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
 
+            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
+
+            val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
+                .setInputData(data)
                     .build()
 
-            WorkManager.getInstance()
-                .enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)
+            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)
 
         }
     }

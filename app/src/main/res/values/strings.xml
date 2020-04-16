@@ -48,5 +48,7 @@
     <string name="country_data">countryData</string>
     <string name="total_cases">totalCases</string>
     <string name="country_name">countryName</string>
+    <string name="total_recovered">totalRecovered</string>
+    <string name="total_deaths">totalDeaths</string>
 
 </resources>
