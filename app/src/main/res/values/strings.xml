@@ -33,7 +33,7 @@
     <string name="channel_id">channel1</string>
     <string name="update_intervals">Update Intervals</string>
     <string name="country_for_notification">country for notification</string>
-    <string name="save">Save</string>
+    <string name="save">Subscribe</string>
 
     <string-array name="intervals">
         <item>2 hours</item>
@@ -50,5 +50,6 @@
     <string name="country_name">countryName</string>
     <string name="total_recovered">totalRecovered</string>
     <string name="total_deaths">totalDeaths</string>
+    <string name="settingDesc">You can follow the updates on your country and receive notifications,All you need is making a subscription .</string>
 
 </resources>

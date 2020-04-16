@@ -88,7 +88,7 @@ class SettingsFragment : Fragment() {
 
         var adapter = ArrayAdapter(
             activity!!,
-            R.layout.support_simple_spinner_dropdown_item,
+            R.layout.my_spinner_item,
             countriesArr
         )
         notiCountry.adapter = adapter
