@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/home_color"
-    tools:context=".ui.History.HistoryFragment">
+    tools:context=".ui.history.HistoryFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/historySwipeRefresh"

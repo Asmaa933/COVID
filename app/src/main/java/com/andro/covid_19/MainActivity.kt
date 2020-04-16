@@ -1,18 +1,16 @@
 package com.andro.covid_19
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
-import com.andro.covid_19.ui.History.HistoryFragment
+import com.andro.covid_19.ui.history.HistoryFragment
 import com.andro.covid_19.ui.home.HomeFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.andro.covid_19.ui.settings.SettingsFragment
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,6 +52,12 @@ class MainActivity : AppCompatActivity() {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.nav_host_fragment, selectedFregment).commit()
 
+                }
+
+                R.id.nav_settings -> {
+                    selectedFregment = SettingsFragment()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment, selectedFregment).commit()
                 }
             }
             drawerLayout.closeDrawers()

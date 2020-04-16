@@ -1,8 +1,7 @@
-package com.andro.covid_19.ui.History
+package com.andro.covid_19.ui.history
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
