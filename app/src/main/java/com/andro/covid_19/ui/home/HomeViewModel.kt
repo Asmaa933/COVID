@@ -25,7 +25,6 @@ class HomeViewModel() : ViewModel() {
 
 
     fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesState()
-    fun getCountriesDatafromRom(): LiveData<List<CountriesStat>> = repository.getAllCountriesStatefromRom()
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>> = repository.getWorldTotalStates()
 
     fun isOnline(): Boolean {

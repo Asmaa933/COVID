@@ -10,7 +10,6 @@ interface covidRepository {
     //want it to be asynchronous // enable us to call this function from a call routine
 
     fun getAllCountriesState(): LiveData<List<CountriesStat>>
-    fun getAllCountriesStatefromRom(): LiveData<List<CountriesStat>>
     fun saveCountriesStat(CountriesStat: CountriesStat)
 
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>>
