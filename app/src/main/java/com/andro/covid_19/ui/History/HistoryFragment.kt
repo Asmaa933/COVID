@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +18,8 @@ import com.andro.covid_19.isNetworkConnected
 import com.andro.retro.json_models.AllAffectedCountries
 import com.andro.retro.json_models.StatByCountry
 import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.fragment_history.progress_bar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,8 +49,20 @@ class HistoryFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewControl()
+        historySwipeRefresh.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        historySwipeRefresh.setOnRefreshListener {
+            viewControl()
+
+         }
+    }
+
+    private fun viewControl()
+    {
         if (isNetworkConnected(activity!!)) {
 
+            history_layout.visibility = View.VISIBLE
+            no_connection.visibility = View.INVISIBLE
             historyViewModel.getAllAffectedCountries()
                 .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
                     val array: ArrayList<String> = ArrayList()
@@ -60,11 +75,13 @@ class HistoryFragment : Fragment() {
                     array?.let { it1 -> setupSearch(it1) }
 
                 })
+            historySwipeRefresh.isRefreshing = false
 
         }else
         {
             history_layout.visibility = View.INVISIBLE
             no_connection.visibility = View.VISIBLE
+            historySwipeRefresh.isRefreshing = false
         }
     }
 

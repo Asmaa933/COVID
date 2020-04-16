@@ -36,10 +36,6 @@ class HomeFragment : Fragment() {
        // setupObserversBasedRoom()
         setHasOptionsMenu(true)
         setupObserversBasedNatwork()
-
-
-
-
         return root
 
 
@@ -102,13 +98,7 @@ class HomeFragment : Fragment() {
 }
 
     }
-    private fun setupObserversBasedRoom() {
 
-        homeViewModel.getCountriesDatafromRom().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
-        })
-
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.map_button, menu)

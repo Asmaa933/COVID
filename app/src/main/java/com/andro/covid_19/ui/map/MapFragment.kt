@@ -32,6 +32,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
 
     private lateinit var viewModel: MapViewModel
     private lateinit var googleMap: GoogleMap
+    private lateinit var gc: Geocoder
+
 
 
 
@@ -50,21 +52,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
-        if (!isNetworkConnected(activity!!))
-        {
-            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
-
-
-    }
-
-    override fun onMapReady(map: GoogleMap?) {
-        map?.let {
-            googleMap = it
-        }
-        googleMap.setOnMapLoadedCallback(this)
 
         fab.setOnClickListener {
             if (isNetworkConnected(activity!!))
@@ -78,10 +65,44 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             }
         }
 
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+        if (isNetworkConnected(activity!!))
+        {
+            loadMarker()
+        }
+        else
+        {
+            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+    }
+
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.let {
+            googleMap = it
+        }
+        googleMap.setOnMapLoadedCallback(this)
+        if (!isNetworkConnected(activity!!))
+        {
+            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
+        else
+        {
+            loadMarker()
+        }
+
+
     }
 
     private fun putEffectedCountries(countries: List<CountriesStat>, size:IntRange) {
-
         for (i in size) {
             putEfectedCountriesAsync().execute(countries[i])
         }
@@ -90,11 +111,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
 
 
     override fun onMapLoaded() {
-        loadMarker()
-
     }
-    fun loadMarker()
+    private fun loadMarker()
     {
+        gc = Geocoder(context?.applicationContext)
+        googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
         viewModel.getCountriesData()
             .observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
 
@@ -104,15 +125,15 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
     }
     private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>(){
 
-        var CountriesStat:CountriesStat? = null
+        var countriesStat:CountriesStat? = null
         override fun doInBackground(vararg params: CountriesStat?): List<Address> {
-            var gc = Geocoder(context?.applicationContext)
+
             val addresses: List<Address> = try {
                 gc.getFromLocationName(params[0]?.country_name, 3)
             } catch (e: Exception) {
                 ArrayList<Address>()
             }
-            CountriesStat = params[0]
+            countriesStat = params[0]
             return  addresses
         }
 
@@ -120,7 +141,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         override fun onPostExecute(result: List<Address>) {
             super.onPostExecute(result)
             if (result.isNotEmpty()) {
-                googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
               //  var snippet:String = "\nConfirm : "+CountriesStat?.cases+"\nDeath : "+CountriesStat?.deaths+"\nRecover : "+CountriesStat?.total_recovered
                 googleMap.addMarker(
                     MarkerOptions().position(
@@ -128,7 +148,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
                             result.get(result.size - 1).latitude,
                             result.get(result.size - 1).longitude
                         )
-                    ).title(CountriesStat?.cases).snippet(CountriesStat?.deaths+","+CountriesStat?.total_recovered)
+                    ).title(countriesStat?.cases).snippet(countriesStat?.deaths+","+countriesStat?.total_recovered)
                 )
             }
         }
