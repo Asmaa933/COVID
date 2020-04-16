@@ -1,14 +1,14 @@
-package com.andro.covid_19.ui.History
+package com.andro.covid_19.ui.history
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +17,8 @@ import com.andro.covid_19.isNetworkConnected
 import com.andro.retro.json_models.AllAffectedCountries
 import com.andro.retro.json_models.StatByCountry
 import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.fragment_history.progress_bar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,7 +28,7 @@ import kotlin.collections.ArrayList
 
 
 class HistoryFragment : Fragment() {
-    private var countryName: String? = null
+    private var countryName: String = "USA"
     private var date: String? = null
     private lateinit var historyViewModel: HistoryViewModel
 
@@ -41,28 +43,48 @@ class HistoryFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
-
-
-
-        historyViewModel.getAllAffectedCountries()
-            .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
-                val array: ArrayList<String> = ArrayList()
-                for (i in 0 until it.affected_countries.size - 1) {
-                    countryName = it.affected_countries[1]
-                    if (!it.affected_countries[i].equals("")) {
-                        array?.add(it.affected_countries[i])
-                    }
-                }
-                array?.let { it1 -> setupSearch(it1) }
-
-            })
-
-
-
-
-
         return root
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewControl()
+        historySwipeRefresh.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        historySwipeRefresh.setOnRefreshListener {
+            viewControl()
+
+         }
+    }
+
+    private fun viewControl()
+    {
+        if (isNetworkConnected(activity!!)) {
+
+            history_layout.visibility = View.VISIBLE
+            no_connection.visibility = View.INVISIBLE
+            historyViewModel.getAllAffectedCountries()
+                .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
+                    val array: ArrayList<String> = ArrayList()
+                    for (i in 0 until it.affected_countries.size - 1) {
+                        countryName = it.affected_countries[1]
+                        if (!it.affected_countries[i].equals("")) {
+                            array?.add(it.affected_countries[i])
+                        }
+                    }
+                    array?.let { it1 -> setupSearch(it1) }
+
+                })
+            historySwipeRefresh.isRefreshing = false
+
+        }else
+        {
+            history_layout.visibility = View.INVISIBLE
+            no_connection.visibility = View.VISIBLE
+            historySwipeRefresh.isRefreshing = false
+        }
+    }
+
+
 
 
     private fun setupSearch(countriesArr: List<String>) {
@@ -72,7 +94,7 @@ class HistoryFragment : Fragment() {
 
         var adapter = ArrayAdapter(
             activity!!,
-            R.layout.support_simple_spinner_dropdown_item,
+            R.layout.my_spinner_item,
             countriesArr
         )
         spinner.adapter = adapter
@@ -90,20 +112,21 @@ class HistoryFragment : Fragment() {
             searchButton.setOnClickListener {
                 if (isNetworkConnected(activity!!)) {
                     enableViews(false)
-                    historyProgressBar.visibility = View.VISIBLE
-                    if (date != null) {
+                    progress_bar.visibility = View.VISIBLE
+                    if (date != null&&countryName!=null) {
                         historyViewModel.getHistoryForCountry(
                             countryName!!,
-                            dateTxt.text.toString()
+                            showDateTxt.text.toString()
                         )
                             .observe(viewLifecycleOwner, Observer<StatByCountry> {
                                 if (it != null) {
                                     cardView.visibility = View.VISIBLE
                                     newCasesTxt.text = it.new_cases
-                                    deathTxt.text = it.new_deaths
+                                    newDeathsTxt.text = it.new_deaths
                                     recoverdTxt.text = it.total_recovered
                                     totalTxt.text = it.total_cases
-                                    historyProgressBar.visibility = View.GONE
+                                    deathTxt.text = it.total_deaths
+                                    progress_bar.visibility = View.GONE
                                     enableViews(true)
                                 } else {
                                     cardView.visibility = View.GONE
@@ -114,15 +137,13 @@ class HistoryFragment : Fragment() {
                     } else {
                         Toast.makeText(activity!!, "choose date for search", Toast.LENGTH_LONG)
                             .show()
-                        historyProgressBar.visibility = View.GONE
+                        progress_bar.visibility = View.GONE
                         enableViews(true)
                     }
                 } else {
-                    Toast.makeText(
-                        activity!!,
-                        getString(R.string.check_connection),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    history_layout.visibility = View.INVISIBLE
+
+                    no_connection.visibility = View.VISIBLE
 
                 }
 
@@ -148,7 +169,7 @@ class HistoryFragment : Fragment() {
                 choosenDate.set(Calendar.MONTH, monthOfYear)
                 choosenDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 date = format.format(choosenDate.time)
-                dateTxt.text = date
+                showDateTxt.text = date
             }, mYear, mMonth, mDay
         )
         val cal = Calendar.getInstance()

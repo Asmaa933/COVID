@@ -2,7 +2,7 @@
     <string name="app_name">COVID-19</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Covid-19 Tracker</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -24,4 +24,32 @@
 
     <string name="home_second">Home Second</string>
     <string name="check_connection">Check internet connection</string>
+    <string name="updates">Updates </string>
+    <string name="Covid_19">Covid - 19 </string>
+    <string name="Data_provided_by">Data provided by: Coronavirus monitor</string>
+    <string name="Check_you_connection">Check you network connection</string>
+    <string name="chooseCountry">"Choose Country : "</string>
+    <string name="choose_date">Choose Date : </string>
+    <string name="channel_id">channel1</string>
+    <string name="update_intervals">Update Intervals</string>
+    <string name="country_for_notification">country for notification</string>
+    <string name="save">Subscribe</string>
+
+    <string-array name="intervals">
+        <item>2 hours</item>
+        <item>1 hour</item>
+        <item>5 hours</item>
+        <item>Once a day</item>
+    </string-array>
+    <string name= "two_hours">2 hours</string>
+    <string name= "one_hour">1 hour</string>
+    <string name= "five_hours">5 hours</string>
+    <string name= "once_day"> Once a day</string>
+    <string name="country_data">countryData</string>
+    <string name="total_cases">totalCases</string>
+    <string name="country_name">countryName</string>
+    <string name="total_recovered">totalRecovered</string>
+    <string name="total_deaths">totalDeaths</string>
+    <string name="settingDesc">You can follow the updates on your country and receive notifications,All you need is making a subscription .</string>
+
 </resources>
