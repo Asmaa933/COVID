@@ -9,7 +9,7 @@ import android.os.Build
 
 class GlobalApplication: Application() {
 companion object{
-    lateinit var globalContext: Context
+   private lateinit var globalContext: Context
     fun getApplicationContext(): Context{
         return globalContext
     }

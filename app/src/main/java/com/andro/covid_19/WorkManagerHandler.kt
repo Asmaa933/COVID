@@ -25,9 +25,11 @@ class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         val api = ApiInterface(ConnectivityInterceptorImpl(SettingsViewModel.context))
         val apiHandler = ApiHandler(api)
+        val countryName = inputData.getString(applicationContext.getString(R.string.country_name))
 
         GlobalScope.launch (Dispatchers.Main){
-            apiHandler.getSpecificCountryState("Egypt")
+            countryName?.let { apiHandler.getSpecificCountryState(it) }
+            Log.i("asmaa","om ahmed")
             apiHandler.specificCountryState.observeForever {
                 createNotification("not", it.latest_stat_by_country[0].active_cases) }
 
@@ -38,6 +40,7 @@ class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
     }
 
     fun createNotification(title: String, text: String) {
+
         val manager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification =

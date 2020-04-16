@@ -36,6 +36,10 @@ class HomeFragment : Fragment() {
        // setupObserversBasedRoom()
         setHasOptionsMenu(true)
         setupObserversBasedNatwork()
+
+
+
+
         return root
 
 
@@ -87,9 +91,9 @@ class HomeFragment : Fragment() {
 
             homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
             })
-            GlobalScope.launch(Dispatchers.Main) {
                 homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
                 })
+        GlobalScope.launch(Dispatchers.Main) {
 
 
                 swipeRefreshLayout.isRefreshing = false
