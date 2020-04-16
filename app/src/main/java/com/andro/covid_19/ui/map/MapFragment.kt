@@ -57,6 +57,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             if (isNetworkConnected(activity!!))
             {
                 loadMarker()
+                Snackbar.make(view!!, "Please Wait a minute", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
             }
             else
             {
@@ -72,15 +74,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        if (isNetworkConnected(activity!!))
-        {
-            loadMarker()
-        }
-        else
-        {
-            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+
     }
 
 
@@ -89,6 +83,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             googleMap = it
         }
         googleMap.setOnMapLoadedCallback(this)
+        gc = Geocoder(context?.applicationContext)
+        googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
         if (!isNetworkConnected(activity!!))
         {
             Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
@@ -96,6 +92,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         }
         else
         {
+            Snackbar.make(view!!, "Please Wait a minute", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
             loadMarker()
         }
 
@@ -114,8 +112,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
     }
     private fun loadMarker()
     {
-        gc = Geocoder(context?.applicationContext)
-        googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
         viewModel.getCountriesData()
             .observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
 
