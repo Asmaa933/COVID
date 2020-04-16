@@ -30,4 +30,23 @@
     <string name="Check_you_connection">Check you network connection</string>
     <string name="chooseCountry">"Choose Country : "</string>
     <string name="choose_date">Choose Date : </string>
+    <string name="channel_id">channel1</string>
+    <string name="update_intervals">Update Intervals</string>
+    <string name="country_for_notification">country for notification</string>
+    <string name="save">Save</string>
+
+    <string-array name="intervals">
+        <item>2 hours</item>
+        <item>1 hour</item>
+        <item>5 hours</item>
+        <item>Once a day</item>
+    </string-array>
+    <string name= "two_hours">2 hours</string>
+    <string name= "one_hour">1 hour</string>
+    <string name= "five_hours">5 hours</string>
+    <string name= "once_day"> Once a day</string>
+    <string name="country_data">countryData</string>
+    <string name="total_cases">totalCases</string>
+    <string name="country_name">countryName</string>
+
 </resources>

@@ -91,9 +91,9 @@ class HomeFragment : Fragment() {
 
             homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
             })
-            GlobalScope.launch(Dispatchers.Main) {
                 homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
                 })
+        GlobalScope.launch(Dispatchers.Main) {
 
 
                 swipeRefreshLayout.isRefreshing = false
@@ -102,13 +102,7 @@ class HomeFragment : Fragment() {
 }
 
     }
-    private fun setupObserversBasedRoom() {
 
-        homeViewModel.getCountriesDatafromRom().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
-        })
-
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.map_button, menu)

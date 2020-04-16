@@ -25,6 +25,7 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     private lateinit var countrystatDao: CountrystatDao
     private lateinit var countriesStatDao: CountriesStatDao
     private lateinit var worldTotalStatesDao: WorldTotalStatesDao
+//obj dao
 
     init {
         val database: CovidDataBase? = CovidDataBase.getInstance(context)
@@ -48,9 +49,7 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
                 addWorldTotalStates(it)
             }
             allAffectedCountries.observeForever {  }
-            countryHistoryInDate.observeForever {
-                print("hello")
-            }
+            countryHistoryInDate.observeForever {  }
         }
 
     }
@@ -62,8 +61,6 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
         }
         return countriesStatDao.getAll()
     }
-
-
 
 
     override fun saveCountriesStat(countriesStat: CountriesStat) {
@@ -101,12 +98,13 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     }
 
 
-
+// get affectedCountry
     override fun getAffectedCountries(): LiveData<AllAffectedCountries> {
         launch {  apiHandler.getAffectedCountries() }
         return apiHandler.allAffectedCountries
     }
 
+    // get History for country
     override fun getHistoryForCountry(countryName: String, date: String): LiveData<StatByCountry> {
     launch {  apiHandler.getHistoryForCountryInDate(countryName , date) }
         return apiHandler.countryHistoryInDate
