@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +21,7 @@ import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.history.HistoryViewModel
 import com.andro.covid_19.ui.home.HomeViewModel
 import com.andro.retro.json_models.AllAffectedCountries
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.time.Duration
@@ -44,9 +46,23 @@ class SettingsFragment : Fragment() {
         return root
     }
 
+
     override fun onStart() {
         super.onStart()
+        controlView()
+        settingSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        settingSwipeRefreshLayout.setOnRefreshListener {
+            controlView()
+
+        }
+
+    }
+    private fun controlView()
+    {
         if (isNetworkConnected(activity!!)) {
+
+            settingLayout.visibility = View.VISIBLE
+            setting_no_connection.visibility = View.INVISIBLE
 
             settingsViewModel.getAllAffectedCountries()
                 .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
@@ -58,14 +74,25 @@ class SettingsFragment : Fragment() {
                     }
                     array.let { it1 -> setupCountrySpinner(it1) }
 
+
                 })
+            setupIntervalSpinner()
+            setupSaveButton()
+            settingSwipeRefreshLayout.isRefreshing = false
 
         }
-        setupIntervalSpinner()
-        setupSaveButton()
+        else
+        {
+            settingLayout.visibility = View.INVISIBLE
+            setting_no_connection.visibility = View.VISIBLE
+            settingSwipeRefreshLayout.isRefreshing = false
+
+        }
+
+
     }
 
-    fun setupIntervalSpinner() {
+    private fun setupIntervalSpinner() {
         intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 countryName  = "USA"
@@ -127,19 +154,26 @@ class SettingsFragment : Fragment() {
 
         }
         saveBtn.setOnClickListener {
+            if (isNetworkConnected(activity!!))
+            {
+                if (intervalTime == 0){
+                    AlarmManagerHandler.cancelAlarm(countryName)
+                }else{
+                    AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
+                }
+                Snackbar.make(view!!,
+                    "Now you will receive notifications about updates on $countryName", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
 
-//            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
-//
-//            val request = PeriodicWorkRequest.Builder(WorkManagerHandler::class.java,15,TimeUnit.MINUTES)
-//                .setInputData(data)
-//                .build()
-//
-//WorkManager.getInstance()
-            if (intervalTime == 0){
-                AlarmManagerHandler.cancelAlarm(countryName)
-            }else{
-                AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
             }
+            else
+            {
+                Snackbar.make(view!!, "Check your connection", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+
+            }
+
+
   }
     }
 
