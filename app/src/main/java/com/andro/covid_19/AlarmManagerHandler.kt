@@ -33,7 +33,7 @@ object AlarmManagerHandler {
                 pendingIntent
             )
             2 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
+                AlarmManager.RTC_WAKEUP ,
                 SystemClock.elapsedRealtime(),
                  2 *  60 * 1000//AlarmManager.INTERVAL_HOUR * 2,
                 ,pendingIntent
