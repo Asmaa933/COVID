@@ -1,5 +1,6 @@
 package com.andro.retro.json_models
 
+
 data class LatestStatByCountry(
     val active_cases: String,
     val country_name: String,

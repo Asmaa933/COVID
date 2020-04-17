@@ -4,28 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:background="@color/home_color">
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Data provided by: ASd"
-            android:visibility="gone" />
+            android:layout_margin="10dp"
+            android:layout_weight="3.75"
+            android:gravity="center"
+            android:text="@string/Data_provided_by"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            tools:ignore="RtlCompat" />
 
         <LinearLayout
             android:id="@+id/llTotalData"
@@ -49,8 +54,9 @@
                     android:maxLines="1"
                     android:minLines="1"
                     android:text="@string/infected"
+                    android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="#FF9800"
+                    android:textColor="@color/confirm"
                     android:textSize="16sp"
                     app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="10sp" />
@@ -62,8 +68,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:text="@string/fetch"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#FF9800"
                     android:textSize="16sp"
                     app:autoSizeMaxTextSize="20sp"
@@ -86,8 +92,9 @@
                     android:minLines="1"
                     android:text="@string/death"
                     android:textAlignment="center"
-                    android:textColor="#FF0000"
+                    android:textColor="@color/death"
                     android:textSize="16sp"
+                    android:gravity="center"
                     app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="10sp" />
 
@@ -98,8 +105,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:text="@string/fetch"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#FF0000"
                     android:textSize="16sp"
                     app:autoSizeMaxTextSize="20sp"
@@ -122,8 +129,9 @@
                     android:minLines="1"
                     android:text="@string/recovered"
                     android:textAlignment="center"
-                    android:textColor="#20BE25"
+                    android:textColor="@color/recover"
                     android:textSize="16sp"
+                    android:gravity="center"
                     app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="10sp" />
 
@@ -134,14 +142,15 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:minLines="1"
-                    android:text="@string/fetch"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#20BE25"
                     android:textSize="16sp"
                     app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="10sp" />
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 
@@ -149,9 +158,10 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border"
         android:orientation="horizontal"
+        android:padding="10dp"
         android:weightSum="3"
-        app:layout_constraintBottom_toTopOf="@+id/allCounties_recyclerview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
@@ -162,11 +172,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1.1"
             android:minLines="1"
             android:text="@string/country"
             android:textAlignment="textStart"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="10sp" />
@@ -181,7 +192,9 @@
             android:layout_weight="0.6"
             android:minLines="1"
             android:text="@string/confirm"
+            android:gravity="end"
             android:textAlignment="textEnd"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="10sp" />
@@ -197,6 +210,8 @@
             android:minLines="1"
             android:text="@string/death"
             android:textAlignment="textEnd"
+            android:gravity="end"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="10sp" />
@@ -212,31 +227,47 @@
             android:minLines="1"
             android:text="@string/recover"
             android:textAlignment="textEnd"
+            android:gravity="end"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="10sp" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/allCounties_recyclerview"
-        android:layout_width="401dp"
-        android:layout_height="536dp"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allCounties_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

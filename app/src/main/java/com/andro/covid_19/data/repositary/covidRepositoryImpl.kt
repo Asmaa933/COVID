@@ -7,10 +7,7 @@ import com.andro.covid_19.data.db.CountriesStatDao
 import com.andro.covid_19.data.db.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
 import com.andro.covid_19.data.db.WorldTotalStatesDao
-import com.andro.retro.json_models.AllAffectedCountries
-import com.andro.retro.json_models.CountriesStat
-import com.andro.retro.json_models.StatByCountry
-import com.andro.retro.json_models.WorldTotalStates
+import com.andro.retro.json_models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +22,7 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     private lateinit var countrystatDao: CountrystatDao
     private lateinit var countriesStatDao: CountriesStatDao
     private lateinit var worldTotalStatesDao: WorldTotalStatesDao
+//obj dao
 
     init {
         val database: CovidDataBase? = CovidDataBase.getInstance(context)
@@ -48,9 +46,7 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
                 addWorldTotalStates(it)
             }
             allAffectedCountries.observeForever {  }
-            countryHistoryInDate.observeForever {
-                print("hello")
-            }
+            countryHistoryInDate.observeForever {  }
         }
 
     }
@@ -99,16 +95,18 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     }
 
 
-
+// get affectedCountry
     override fun getAffectedCountries(): LiveData<AllAffectedCountries> {
         launch {  apiHandler.getAffectedCountries() }
         return apiHandler.allAffectedCountries
     }
 
-    override fun getHistoryForCountry(countryName: String, date: String): LiveData<StatByCountry> {
+    // get History for country
+    override fun getHistoryForCountry(countryName: String, date: String): LiveData<HistoryOfCountry> {
     launch {  apiHandler.getHistoryForCountryInDate(countryName , date) }
         return apiHandler.countryHistoryInDate
     }
+
 
 
 }

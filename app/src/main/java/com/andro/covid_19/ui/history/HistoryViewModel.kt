@@ -1,4 +1,4 @@
-package com.andro.covid_19.ui.History
+package com.andro.covid_19.ui.history
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -9,7 +9,7 @@ import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.covid_19.data.repositary.covidRepository
 import com.andro.covid_19.data.repositary.covidRepositoryImpl
 import com.andro.retro.json_models.AllAffectedCountries
-import com.andro.retro.json_models.CountriesStat
+import com.andro.retro.json_models.HistoryOfCountry
 import com.andro.retro.json_models.StatByCountry
 
 class HistoryViewModel : ViewModel() {
@@ -22,7 +22,7 @@ class HistoryViewModel : ViewModel() {
 
     private var repository: covidRepository = covidRepositoryImpl(context,apiHandler)
 
-    fun getHistoryForCountry(countryName: String, date: String): LiveData<StatByCountry> = repository.getHistoryForCountry(countryName,date)
+    fun getHistoryForCountry(countryName: String, date: String): LiveData<HistoryOfCountry> = repository.getHistoryForCountry(countryName,date)
     fun getAllAffectedCountries(): LiveData<AllAffectedCountries>  = repository.getAffectedCountries()
 
 }

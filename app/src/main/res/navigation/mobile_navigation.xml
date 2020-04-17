@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_history"
-        android:name="com.andro.covid_19.ui.History.HistoryFragment"
+        android:name="com.andro.covid_19.ui.history.HistoryFragment"
         android:label="@string/menu_history"
         tools:layout="@layout/fragment_history" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.andro.covid_19.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_settings"
+        android:name="com.andro.covid_19.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>

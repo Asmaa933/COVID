@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andro.covid_19.R
 import com.andro.retro.json_models.CountriesStat
-import com.andro.retro.json_models.StatByCountry
 import kotlinx.android.synthetic.main.item.view.*
+
 
 class HomeAdapter(val items: List<CountriesStat>) : RecyclerView.Adapter< HomeAdapter.HomeViewHolder>() {
     class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -27,5 +27,6 @@ class HomeAdapter(val items: List<CountriesStat>) : RecyclerView.Adapter< HomeAd
         holder.itemView.tvRecoverCase.text = items[position].total_recovered
 
     }
+
 
 }
