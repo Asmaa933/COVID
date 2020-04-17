@@ -93,14 +93,16 @@ dependencies {
 
     // spinner
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+
+    //map
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.7'
 
     //work manager
-    def work_version = "1.0.0-alpha06"
+    //def work_version = "1.0.1"
+   // implementation "android.arch.work:work-runtime-ktx:$work_version"
 
-    implementation "android.arch.work:work-runtime-ktx:$work_version"
 
 }

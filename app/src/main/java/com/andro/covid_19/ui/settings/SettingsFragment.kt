@@ -9,14 +9,20 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.*
+//import androidx.work.Data
+//import androidx.work.ExistingPeriodicWorkPolicy
+//import androidx.work.PeriodicWorkRequestBuilder
+//import androidx.work.WorkManager
 import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
-import com.andro.covid_19.WorkManagerHandler
+//import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
-
+import com.andro.covid_19.ui.history.HistoryViewModel
+import com.andro.covid_19.ui.home.HomeViewModel
 import com.andro.retro.json_models.AllAffectedCountries
+import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_settings.*
+import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 class SettingsFragment : Fragment() {

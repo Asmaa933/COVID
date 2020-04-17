@@ -74,10 +74,13 @@ interface ApiInterface {
                     .build()
                 return@Interceptor chain.proceed(request)
             }
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
 
             val okHttpClient = OkHttpClient.Builder().apply {
                 readTimeout(30, TimeUnit.SECONDS)
-                connectTimeout(30, TimeUnit.SECONDS)
+                connectTimeout(20, TimeUnit.SECONDS)
                     addInterceptor(requestInterceptor)
                     addInterceptor(connectivityInterceptor)
             }
