@@ -9,6 +9,7 @@
     android:textColor="@color/white"
     android:textSize="15dp"
     android:textAlignment="center"
+    android:gravity="center"
     android:textColorHint="@color/white"
     >
 

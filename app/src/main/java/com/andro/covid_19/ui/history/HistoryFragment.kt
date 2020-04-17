@@ -52,26 +52,19 @@ class HistoryFragment : Fragment() {
         val  CardLinearLayout = root.findViewById(R.id. CardLinearLayout) as LinearLayout
 
          searchButton.setOnClickListener {
-            cardView.visibility = View.INVISIBLE
+             cardView.visibility = View.INVISIBLE
              CardLinearLayout.visibility = View.INVISIBLE
             if (isNetworkConnected(activity!!)) {
-                Log.i("habl","ljhg")
+               // Log.i("habl","ljhg")
                 progress_bar.visibility = View.VISIBLE
                 if (date != null&&countryName!=null) {
-                    Log.i("habl",date +countryName )
+                    //Log.i("habl",date +countryName )
                    historyViewModel.getHistoryForCountry(countryName!!, showDateTxt.text.toString()).observe(viewLifecycleOwner, Observer<HistoryOfCountry> {
                        Log.i("habl",it.toString() )
                        if (it != null) {
-                                Log.i("habl",it.toString() )
-                                if(it!=oldData)
+                               // Log.i("habl",it.toString() )
                                 checkIfItIsOldData(it)
-                                else
-                                {
-                                    cardView.visibility = View.INVISIBLE
-                                    CardLinearLayout.visibility = View.INVISIBLE
-                                }
-
-                                Log.i("habl","observe")
+                               // Log.i("habl","observe")
 
                             } else {
                                 cardView.visibility = View.INVISIBLE
@@ -149,28 +142,17 @@ class HistoryFragment : Fragment() {
     }
     fun checkIfItIsOldData(historyOfCountry:HistoryOfCountry)
     {
-        /*if( newCasesTxt.text==null|| newCasesTxt.text!=historyOfCountry.stat_by_country.first().new_cases||newDeathsTxt.text==null&&  newDeathsTxt.text!=historyOfCountry.stat_by_country.first().new_deaths
-            || recoverdTxt.text==null&&  recoverdTxt.text!=historyOfCountry.stat_by_country.first().total_recovered||
-            totalTxt.text==null&& totalTxt.text!=historyOfCountry.stat_by_country.first().total_cases||
-            deathTxt.text==null&& deathTxt.text!=historyOfCountry.stat_by_country.first().total_deaths)
-        {*/
-            progress_bar.visibility = View.INVISIBLE
-             cardView.visibility = View.VISIBLE
-            CardLinearLayout.visibility = View.VISIBLE
-            newCasesTxt.text = historyOfCountry.stat_by_country.first().new_cases
-            newDeathsTxt.text = historyOfCountry.stat_by_country.first().new_deaths
-            recoverdTxt.text = historyOfCountry.stat_by_country.first().total_recovered
-            totalTxt.text = historyOfCountry.stat_by_country.first().total_cases
-            deathTxt.text = historyOfCountry.stat_by_country.first().total_deaths
-        oldData = historyOfCountry
-        /*}
-        else
-        {
-            cardView.visibility = View.INVISIBLE
-            CardLinearLayout.visibility = View.INVISIBLE
-        }*/
-
-
+       GlobalScope.launch(Dispatchers.Main) {
+           Log.i("habl","observe")
+           progress_bar.visibility = View.INVISIBLE
+           cardView.visibility = View.VISIBLE
+           CardLinearLayout.visibility = View.VISIBLE
+           newCasesTxt.text = historyOfCountry.stat_by_country.last().new_cases
+           newDeathsTxt.text = historyOfCountry.stat_by_country.last().new_deaths
+           recoverdTxt.text = historyOfCountry.stat_by_country.last().total_recovered
+           totalTxt.text = historyOfCountry.stat_by_country.last().total_cases
+           deathTxt.text = historyOfCountry.stat_by_country.last().total_deaths
+       }
 
 
     }

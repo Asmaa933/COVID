@@ -37,7 +37,8 @@
                 android:minLines="1"
                 android:text="-"
                 android:textColor="@color/white"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
+                android:gravity="end"
                 android:textSize="16sp"
                 app:autoSizeMaxTextSize="20sp"
                 app:autoSizeMinTextSize="10sp" />
@@ -53,7 +54,8 @@
                 android:minLines="1"
                 android:text="-"
                 android:textColor="@color/white"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
+                android:gravity="end"
                 android:textSize="16sp"
                 app:autoSizeMaxTextSize="20sp"
                 app:autoSizeMinTextSize="10sp" />
@@ -69,7 +71,8 @@
                 android:minLines="1"
                 android:text="-"
                 android:textColor="@color/white"
-                android:textAlignment="center"
+                android:textAlignment="textEnd"
+                android:gravity="end"
                 android:textSize="16sp"
                 app:autoSizeMaxTextSize="20sp"
                 app:autoSizeMinTextSize="10sp" />
