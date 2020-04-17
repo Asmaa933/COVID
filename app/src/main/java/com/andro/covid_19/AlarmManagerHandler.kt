@@ -4,12 +4,15 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.SystemClock
 import com.google.gson.GsonBuilder
+import java.util.*
+
 
 object AlarmManagerHandler {
-    fun setAlarmManager(country: String, interval: Int) {
-        val g= GsonBuilder()
+    fun setAlarmManager(country: String, countryNo: Int, interval: String, intervalNo: Int) {
+        cancelAlarm(country)
         val alarmManager =
             GlobalApplication.getApplicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent =
@@ -21,43 +24,61 @@ object AlarmManagerHandler {
         )
         val pendingIntent = PendingIntent.getBroadcast(
             GlobalApplication.getApplicationContext(),
-            1,
+            country.hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
+        val cal1: Calendar = Calendar.getInstance()
+
         when (interval) {
-            1 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                SystemClock.elapsedRealtime(),
-                AlarmManager.INTERVAL_HOUR,
-                pendingIntent
-            )
-            2 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP ,
-                SystemClock.elapsedRealtime(),
-                 2 *  60 * 1000//AlarmManager.INTERVAL_HOUR * 2,
-                ,pendingIntent
-            )
+            GlobalApplication.getApplicationContext().getString(R.string.one_hour) -> {
+                cal1.add(Calendar.HOUR, 1)
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    cal1.timeInMillis,
+                    AlarmManager.INTERVAL_HOUR,
+                    pendingIntent
 
-            5 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                SystemClock.elapsedRealtime(),
-                AlarmManager.INTERVAL_HOUR * 5,
-                pendingIntent
-            )
-            24 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                SystemClock.elapsedRealtime(),
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent
+                )
+            }
+            GlobalApplication.getApplicationContext().getString(R.string.two_hours) -> {
+                cal1.add(Calendar.HOUR, 2)   // for test comment this
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    cal1.timeInMillis,
+                    AlarmManager.INTERVAL_HOUR * 2,    //for teest 2 * 60 * 1000 2 min
 
-            )
+                    pendingIntent
+                )
+            }
 
+            GlobalApplication.getApplicationContext().getString(R.string.five_hours) -> {
+                cal1.add(Calendar.HOUR, 5)
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    cal1.timeInMillis,
+                    AlarmManager.INTERVAL_HOUR * 5,
+                    pendingIntent
+                )
+            }
+            GlobalApplication.getApplicationContext().getString(R.string.once_day) -> {
+                cal1.add(Calendar.HOUR, 24)
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    cal1.timeInMillis,
+                    AlarmManager.INTERVAL_DAY,
+                    pendingIntent
+
+                )
+            }
         }
-
+        SavedPreferences.saveCountry(countryNo)
+        SavedPreferences.saveInterval(intervalNo)
     }
 
     fun cancelAlarm(country: String) {
+        SavedPreferences.resetCountry()
+        SavedPreferences.resetInterval()
         val alarmManager =
             GlobalApplication.getApplicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent =
@@ -67,12 +88,13 @@ object AlarmManagerHandler {
             GlobalApplication.getApplicationContext().getString(R.string.country_name),
             country
         )
-        val pendingIntent = PendingIntent.getService(
+        val pendingIntent = PendingIntent.getBroadcast(
             GlobalApplication.getApplicationContext(),
-            1,
+            country.hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         alarmManager.cancel(pendingIntent)
     }
 }
+

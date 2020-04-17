@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,11 +16,13 @@ import androidx.lifecycle.ViewModelProviders
 //import androidx.work.WorkManager
 import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
+import com.andro.covid_19.SavedPreferences
 //import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.history.HistoryViewModel
 import com.andro.covid_19.ui.home.HomeViewModel
 import com.andro.retro.json_models.AllAffectedCountries
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.time.Duration
@@ -28,8 +31,9 @@ import java.util.concurrent.TimeUnit
 class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
-    private var chosenPeriod: String? = "2 hours"
-    private var intervalTime: Int = 2
+    private var chosenPeriod: String? = "None"
+    private var countryNumberInArray = -1
+    private var intervalNo = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +48,29 @@ class SettingsFragment : Fragment() {
         return root
     }
 
+
     override fun onStart() {
         super.onStart()
+        countryNumberInArray = SavedPreferences.getCountry()!!
+        controlView()
+        settingSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.colorPrimary
+            )
+        )
+        settingSwipeRefreshLayout.setOnRefreshListener {
+            controlView()
+
+        }
+
+    }
+
+    private fun controlView() {
         if (isNetworkConnected(activity!!)) {
+
+            settingLayout.visibility = View.VISIBLE
+            setting_no_connection.visibility = View.INVISIBLE
 
             settingsViewModel.getAllAffectedCountries()
                 .observe(viewLifecycleOwner, Observer<AllAffectedCountries> {
@@ -58,17 +82,27 @@ class SettingsFragment : Fragment() {
                     }
                     array.let { it1 -> setupCountrySpinner(it1) }
 
+
                 })
+            setupIntervalSpinner()
+            setupSaveButton()
+            settingSwipeRefreshLayout.isRefreshing = false
+
+        } else {
+            settingLayout.visibility = View.INVISIBLE
+            setting_no_connection.visibility = View.VISIBLE
+            settingSwipeRefreshLayout.isRefreshing = false
 
         }
-        setupIntervalSpinner()
-        setupSaveButton()
+
+
     }
 
-    fun setupIntervalSpinner() {
-        intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+    private fun setupIntervalSpinner() {
+        SavedPreferences.getInterval()?.let { intervalSpinner.setSelection(it) }
+        intervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                countryName  = "USA"
+                countryName = "USA"
             }
 
             override fun onItemSelected(
@@ -79,6 +113,7 @@ class SettingsFragment : Fragment() {
             ) {
 
                 chosenPeriod = parent?.getItemAtPosition(position).toString()
+                intervalNo = position
 
             }
 
@@ -95,8 +130,8 @@ class SettingsFragment : Fragment() {
             countriesArr
         )
         notiCountry.adapter = adapter
-
-        notiCountry.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+        notiCountry.setSelection(countryNumberInArray)
+        notiCountry.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 countryName = "USA"
             }
@@ -109,6 +144,7 @@ class SettingsFragment : Fragment() {
             ) {
 
                 countryName = parent?.getItemAtPosition(position).toString()
+                countryNumberInArray = position
 
             }
 
@@ -117,22 +153,36 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupSaveButton() {
-        when(chosenPeriod){
 
-            getString(R.string.two_hours) -> intervalTime = 2
-            getString(R.string.one_hour) -> intervalTime = 1
-            getString(R.string.five_hours) -> intervalTime = 5
-            getString(R.string.once_day) -> intervalTime = 24
-            getString(R.string.none) -> intervalTime = 0
+        saveBtn.setOnClickListener {
+            if (isNetworkConnected(activity!!)) {
+                if (chosenPeriod == getString(R.string.none)) {
+                    AlarmManagerHandler.cancelAlarm(countryName)
+                } else {
+                    chosenPeriod?.let { it1 ->
+                        AlarmManagerHandler.setAlarmManager(
+                            countryName,
+                            countryNumberInArray,
+                            it1,
+                            intervalNo
+                        )
+                    }
+                }
+                Snackbar.make(
+                    view!!,
+                    "Now you will receive notifications about updates on $countryName",
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction("Action", null).show()
+
+            } else {
+                Snackbar.make(view!!, "Check your connection", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+
+            }
+
 
         }
-        saveBtn.setOnClickListener {
-            if (intervalTime == 0){
-                AlarmManagerHandler.cancelAlarm(countryName)
-            }else{
-                AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
-            }
-  }
     }
 
 }

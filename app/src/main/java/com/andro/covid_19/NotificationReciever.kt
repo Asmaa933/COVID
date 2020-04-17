@@ -1,13 +1,11 @@
 package com.andro.covid_19
 
 import android.app.NotificationManager
-import android.app.Service
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.andro.covid_19.data.api_services.ApiHandler
 import com.andro.covid_19.data.api_services.ApiInterface
@@ -15,7 +13,6 @@ import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.covid_19.ui.settings.SettingsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 
 class NotificationReciever: BroadcastReceiver() {
@@ -43,6 +40,13 @@ class NotificationReciever: BroadcastReceiver() {
 
         val manager =
             GlobalApplication.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationIntent = Intent(GlobalApplication.getApplicationContext(), MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            GlobalApplication.getApplicationContext(),
+            0, notificationIntent, 0
+        )
+
+
         val notification =
             NotificationCompat.Builder(
                 GlobalApplication.getApplicationContext(),
@@ -55,6 +59,8 @@ class NotificationReciever: BroadcastReceiver() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setContentIntent(pendingIntent)
+
                 .build()
 
         manager.notify(1, notification)
