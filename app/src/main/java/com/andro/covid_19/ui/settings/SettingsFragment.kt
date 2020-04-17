@@ -127,14 +127,6 @@ class SettingsFragment : Fragment() {
 
         }
         saveBtn.setOnClickListener {
-
-//            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
-//
-//            val request = PeriodicWorkRequest.Builder(WorkManagerHandler::class.java,15,TimeUnit.MINUTES)
-//                .setInputData(data)
-//                .build()
-//
-//WorkManager.getInstance()
             if (intervalTime == 0){
                 AlarmManagerHandler.cancelAlarm(countryName)
             }else{

@@ -8,142 +8,150 @@
     android:background="@color/home_color">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_margin="10dp"
+            android:layout_weight="3.75"
+            android:gravity="center"
+            android:text="@string/Data_provided_by"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            tools:ignore="RtlCompat" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="3.75"
-                android:text="@string/Data_provided_by"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                tools:ignore="RtlCompat" />
+        <LinearLayout
+            android:id="@+id/llTotalData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/llTotalData"
+                android:id="@+id/llInfected"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/llInfected"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="@string/infected"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:textAlignment="center"
+                    android:textColor="@color/confirm"
+                    android:textSize="16sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:text="@string/infected"
-                        android:textAlignment="center"
-                        android:textColor="@color/confirm"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/tv_infected"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:textAlignment="center"
-                        android:textColor="#FF9800"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llDeath"
+                <TextView
+                    android:id="@+id/tv_infected"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textAlignment="center"
                     android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:text="@string/death"
-                        android:textAlignment="center"
-                        android:textColor="@color/death"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/tv_death"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:textAlignment="center"
-                        android:textColor="#FF0000"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llRecovered"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:text="@string/recovered"
-                        android:textAlignment="center"
-                        android:textColor="@color/recover"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/tv_recovered"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:textAlignment="center"
-                        android:textColor="#20BE25"
-                        android:textSize="16sp"
-                        app:autoSizeMaxTextSize="20sp"
-                        app:autoSizeMinTextSize="10sp" />
-                </LinearLayout>
+                    android:textColor="#FF9800"
+                    android:textSize="16sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llDeath"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="@string/death"
+                    android:textAlignment="center"
+                    android:textColor="@color/death"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_death"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#FF0000"
+                    android:textSize="16sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRecovered"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="@string/recovered"
+                    android:textAlignment="center"
+                    android:textColor="@color/recover"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_recovered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#20BE25"
+                    android:textSize="16sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -184,6 +192,7 @@
             android:layout_weight="0.6"
             android:minLines="1"
             android:text="@string/confirm"
+            android:gravity="end"
             android:textAlignment="textEnd"
             android:textColor="@color/white"
             android:textSize="16sp"
@@ -201,6 +210,7 @@
             android:minLines="1"
             android:text="@string/death"
             android:textAlignment="textEnd"
+            android:gravity="end"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
@@ -217,6 +227,7 @@
             android:minLines="1"
             android:text="@string/recover"
             android:textAlignment="textEnd"
+            android:gravity="end"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:autoSizeMaxTextSize="20sp"
