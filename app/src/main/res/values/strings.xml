@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">COVID-19</string>
+    <string name="app_name">COVID Tracker</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Covid-19 Tracker</string>
@@ -36,8 +36,9 @@
     <string name="save">Subscribe</string>
 
     <string-array name="intervals">
-        <item>2 hours</item>
+        <item>None</item>
         <item>1 hour</item>
+        <item>2 hours</item>
         <item>5 hours</item>
         <item>Once a day</item>
     </string-array>
@@ -51,5 +52,6 @@
     <string name="total_recovered">totalRecovered</string>
     <string name="total_deaths">totalDeaths</string>
     <string name="settingDesc">You can follow the updates on your country and receive notifications,All you need is making a subscription .</string>
+    <string name="none">none</string>
 
 </resources>

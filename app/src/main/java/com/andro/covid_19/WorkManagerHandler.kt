@@ -48,7 +48,7 @@ class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
                 applicationContext,
                 applicationContext.getString(R.string.channel_id)
             )
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

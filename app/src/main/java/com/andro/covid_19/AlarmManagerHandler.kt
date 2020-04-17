@@ -13,7 +13,7 @@ object AlarmManagerHandler {
         val alarmManager =
             GlobalApplication.getApplicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent =
-            Intent(GlobalApplication.getApplicationContext(), NotificationService::class.java)
+            Intent(GlobalApplication.getApplicationContext(), NotificationReciever::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra(
             GlobalApplication.getApplicationContext().getString(R.string.country_name),
@@ -26,18 +26,19 @@ object AlarmManagerHandler {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         when (interval) {
-            2 -> alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                SystemClock.elapsedRealtime(),
-                 2 *  60 * 1000//AlarmManager.INTERVAL_HOUR * 2,
-                ,pendingIntent
-            )
             1 -> alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 SystemClock.elapsedRealtime(),
                 AlarmManager.INTERVAL_HOUR,
                 pendingIntent
             )
+            2 -> alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                SystemClock.elapsedRealtime(),
+                 2 *  60 * 1000//AlarmManager.INTERVAL_HOUR * 2,
+                ,pendingIntent
+            )
+
             5 -> alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 SystemClock.elapsedRealtime(),
@@ -60,7 +61,7 @@ object AlarmManagerHandler {
         val alarmManager =
             GlobalApplication.getApplicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent =
-            Intent(GlobalApplication.getApplicationContext(), NotificationService::class.java)
+            Intent(GlobalApplication.getApplicationContext(), NotificationReciever::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra(
             GlobalApplication.getApplicationContext().getString(R.string.country_name),

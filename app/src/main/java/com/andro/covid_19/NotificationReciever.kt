@@ -5,6 +5,7 @@ import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -17,19 +18,19 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 
-class NotificationService: BroadcastReceiver() {
+class NotificationReciever: BroadcastReceiver() {
     override fun onReceive(p0: Context?, p1: Intent?) {
         val api = ApiInterface(ConnectivityInterceptorImpl(SettingsViewModel.context))
         val apiHandler = ApiHandler(api)
         val countryName =p1?.getStringExtra(GlobalApplication.getApplicationContext().getString(R.string.country_name))
-
         GlobalScope.launch (Dispatchers.Main){
             if (countryName != null) {
                 apiHandler.getSpecificCountryState(countryName)
             }
-            Log.i("asmaa","om ahmed")
             apiHandler.specificCountryState.observeForever {
-                createNotification("not", it.latest_stat_by_country[0].active_cases) }
+                val update: String = "Total: ${it.latest_stat_by_country[0].total_cases} Recovered: ${it.latest_stat_by_country[0].total_recovered} Deaths: ${it.latest_stat_by_country[0].total_deaths}  "
+                countryName?.let { it1 -> createNotification(it1, update) }
+            }
 
         }
 
@@ -38,7 +39,7 @@ class NotificationService: BroadcastReceiver() {
 }
 
 
-    fun createNotification(title: String, text: String) {
+    fun createNotification(country: String, update: String) {
 
         val manager =
             GlobalApplication.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -47,9 +48,10 @@ class NotificationService: BroadcastReceiver() {
                 GlobalApplication.getApplicationContext(),
                 GlobalApplication.getApplicationContext().getString(R.string.channel_id)
             )
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(title)
-                .setContentText(text)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(GlobalApplication.getApplicationContext().getResources(), R.mipmap.ic_launcher))
+                .setContentTitle("Last $country updates")
+                .setContentText(update)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

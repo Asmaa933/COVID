@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.andro.covid_19.ui.settings.SettingsViewModel
 
 
 class GlobalApplication: Application() {
@@ -18,6 +19,7 @@ companion object{
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        SettingsViewModel.context = applicationContext
     }
     init {
         instance = this

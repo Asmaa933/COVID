@@ -60,18 +60,20 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupIntervalSpinner() {
-        intervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                countryName  = "USA"
+            }
+
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
+                parent: AdapterView<*>?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
-                chosenPeriod = parent.getItemAtPosition(position).toString()
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Another interface callback
+                chosenPeriod = parent?.getItemAtPosition(position).toString()
+
             }
 
         }
@@ -87,17 +89,35 @@ class SettingsFragment : Fragment() {
             countriesArr
         )
         notiCountry.adapter = adapter
-        notiCountry.setOnSearchTextChangedListener { countryName = it }
 
+        notiCountry.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                countryName = "USA"
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                countryName = parent?.getItemAtPosition(position).toString()
+
+            }
+
+        }
 
     }
 
     fun setupSaveButton() {
         when(chosenPeriod){
+
             getString(R.string.two_hours) -> intervalTime = 2
             getString(R.string.one_hour) -> intervalTime = 1
             getString(R.string.five_hours) -> intervalTime = 5
             getString(R.string.once_day) -> intervalTime = 24
+            getString(R.string.none) -> intervalTime = 0
 
         }
         saveBtn.setOnClickListener {
@@ -109,7 +129,11 @@ class SettingsFragment : Fragment() {
 //                .build()
 //
 //WorkManager.getInstance()
-            AlarmManagerHandler.setAlarmManager("Egypt",2)
+            if (intervalTime == 0){
+                AlarmManagerHandler.cancelAlarm(countryName)
+            }else{
+                AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
+            }
   }
     }
 
