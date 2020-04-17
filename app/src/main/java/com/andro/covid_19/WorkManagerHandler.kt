@@ -5,9 +5,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.work.ListenableWorker
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+//import androidx.work.ListenableWorker
+//import androidx.work.Worker
+//import androidx.work.WorkerParameters
 import com.andro.covid_19.data.api_services.ApiHandler
 import com.andro.covid_19.data.api_services.ApiInterface
 import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
@@ -20,7 +20,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
+/*class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
     override fun doWork(): Result {
         val api = ApiInterface(ConnectivityInterceptorImpl(SettingsViewModel.context))
@@ -48,7 +48,7 @@ class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
                 applicationContext,
                 applicationContext.getString(R.string.channel_id)
             )
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -58,4 +58,4 @@ class WorkManagerHandler(context: Context, workerParams: WorkerParameters) :
 
         manager.notify(1, notification)
     }
-}
+}*/

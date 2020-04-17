@@ -9,12 +9,13 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+//import androidx.work.Data
+//import androidx.work.ExistingPeriodicWorkPolicy
+//import androidx.work.PeriodicWorkRequestBuilder
+//import androidx.work.WorkManager
+import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
-import com.andro.covid_19.WorkManagerHandler
+//import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.history.HistoryViewModel
 import com.andro.covid_19.ui.home.HomeViewModel
@@ -28,7 +29,7 @@ class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
     private var chosenPeriod: String? = "2 hours"
-    private var intervalTime: Long = 2
+    private var intervalTime: Int = 2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,18 +66,20 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupIntervalSpinner() {
-        intervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                countryName  = "USA"
+            }
+
             override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
+                parent: AdapterView<*>?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
-                chosenPeriod = parent.getItemAtPosition(position).toString()
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Another interface callback
+                chosenPeriod = parent?.getItemAtPosition(position).toString()
+
             }
 
         }
@@ -92,30 +95,52 @@ class SettingsFragment : Fragment() {
             countriesArr
         )
         notiCountry.adapter = adapter
-        notiCountry.setOnSearchTextChangedListener { countryName = it }
 
+        notiCountry.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                countryName = "USA"
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+                countryName = parent?.getItemAtPosition(position).toString()
+
+            }
+
+        }
 
     }
 
     fun setupSaveButton() {
         when(chosenPeriod){
+
             getString(R.string.two_hours) -> intervalTime = 2
             getString(R.string.one_hour) -> intervalTime = 1
             getString(R.string.five_hours) -> intervalTime = 5
             getString(R.string.once_day) -> intervalTime = 24
+            getString(R.string.none) -> intervalTime = 0
 
         }
         saveBtn.setOnClickListener {
 
-            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
-
-            val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
-                .setInputData(data)
-                    .build()
-
-            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)
-
-        }
+//            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
+//
+//            val request = PeriodicWorkRequest.Builder(WorkManagerHandler::class.java,15,TimeUnit.MINUTES)
+//                .setInputData(data)
+//                .build()
+//
+//WorkManager.getInstance()
+            if (intervalTime == 0){
+                AlarmManagerHandler.cancelAlarm(countryName)
+            }else{
+                AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
+            }
+  }
     }
 
 }
