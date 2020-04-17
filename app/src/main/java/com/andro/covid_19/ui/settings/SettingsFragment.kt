@@ -9,26 +9,21 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
+import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
 import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
-import com.andro.covid_19.ui.history.HistoryViewModel
-import com.andro.covid_19.ui.home.HomeViewModel
+
 import com.andro.retro.json_models.AllAffectedCountries
-import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
     private var chosenPeriod: String? = "2 hours"
-    private var intervalTime: Long = 2
+    private var intervalTime: Int = 2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,15 +102,15 @@ class SettingsFragment : Fragment() {
         }
         saveBtn.setOnClickListener {
 
-            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
-
-            val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
-                .setInputData(data)
-                    .build()
-
-            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)
-
-        }
+//            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
+//
+//            val request = PeriodicWorkRequest.Builder(WorkManagerHandler::class.java,15,TimeUnit.MINUTES)
+//                .setInputData(data)
+//                .build()
+//
+//WorkManager.getInstance()
+            AlarmManagerHandler.setAlarmManager("Egypt",2)
+  }
     }
 
 }

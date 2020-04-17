@@ -92,8 +92,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     //work manager
-    def work_version = "1.0.1"
-    implementation "android.arch.work:work-runtime-ktx:$work_version"
+    def work_version = "1.0.0-alpha06"
 
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
 
 }

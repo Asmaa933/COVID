@@ -35,6 +35,7 @@ interface ApiInterface {
     fun getRandomInstructionAsync(): Deferred<ResponseBody>
 
     @Headers(
+        "Content-Type: application/json",
         "x-rapidapi-host: coronavirus-monitor.p.rapidapi.com",
         "x-rapidapi-key: 423421ec09mshbbc05ab5ac1e0dbp1dabddjsn196db168c54a")
     @GET("latest_stat_by_country.php")
