@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders
 //import androidx.work.WorkManager
 import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
+import com.andro.covid_19.SavedPreferences
 //import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.history.HistoryViewModel
@@ -28,8 +29,9 @@ import java.util.concurrent.TimeUnit
 class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
-    private var chosenPeriod: String? = "2 hours"
-    private var intervalTime: Int = 2
+    private var chosenPeriod: String? = "None"
+    private var countryNumberInArray = -1
+    private var intervalNo = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +48,9 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+            countryNumberInArray = SavedPreferences.getCountry()!!
+
+
         if (isNetworkConnected(activity!!)) {
 
             settingsViewModel.getAllAffectedCountries()
@@ -66,6 +71,10 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupIntervalSpinner() {
+
+
+        SavedPreferences.getInterval()?.let { intervalSpinner.setSelection(it) }
+
         intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 countryName  = "USA"
@@ -79,6 +88,7 @@ class SettingsFragment : Fragment() {
             ) {
 
                 chosenPeriod = parent?.getItemAtPosition(position).toString()
+                intervalNo = position
 
             }
 
@@ -94,8 +104,13 @@ class SettingsFragment : Fragment() {
             R.layout.my_spinner_item,
             countriesArr
         )
+
         notiCountry.adapter = adapter
 
+        if(countryNumberInArray != -1){
+            notiCountry.setSelection(countryNumberInArray)
+
+        }
         notiCountry.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 countryName = "USA"
@@ -109,7 +124,7 @@ class SettingsFragment : Fragment() {
             ) {
 
                 countryName = parent?.getItemAtPosition(position).toString()
-
+                countryNumberInArray = position
             }
 
         }
@@ -117,20 +132,13 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupSaveButton() {
-        when(chosenPeriod){
+        SavedPreferences.saveCountry(countryNumberInArray)
 
-            getString(R.string.two_hours) -> intervalTime = 2
-            getString(R.string.one_hour) -> intervalTime = 1
-            getString(R.string.five_hours) -> intervalTime = 5
-            getString(R.string.once_day) -> intervalTime = 24
-            getString(R.string.none) -> intervalTime = 0
-
-        }
         saveBtn.setOnClickListener {
-            if (intervalTime == 0){
+            if (chosenPeriod == getString(R.string.none)){
                 AlarmManagerHandler.cancelAlarm(countryName)
             }else{
-                AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
+                chosenPeriod?.let { it1 -> AlarmManagerHandler.setAlarmManager(countryName, countryNumberInArray ,it1,intervalNo) }
             }
   }
     }
