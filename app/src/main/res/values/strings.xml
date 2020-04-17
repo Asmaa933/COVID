@@ -32,7 +32,7 @@
     <string name="choose_date">Choose Date : </string>
     <string name="channel_id">channel1</string>
     <string name="update_intervals">Update Intervals</string>
-    <string name="country_for_notification">country for notification</string>
+    <string name="country_for_notification">Country for notification</string>
     <string name="save">Subscribe</string>
 
     <string-array name="intervals">

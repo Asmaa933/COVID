@@ -48,7 +48,7 @@
                         android:fontFamily="serif"
                         android:text="Choose country : "
                         android:textColor="@color/white"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -68,7 +68,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     android:weightSum="3">
@@ -83,7 +83,7 @@
                         android:fontFamily="serif"
                         android:text="@string/choose_date"
                         android:textColor="@color/white"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -111,144 +111,11 @@
                             android:layout_weight="1"
                             android:fontFamily="serif"
                             android:textColor="@color/white"
-                            android:textSize="15dp" />
+                            android:textSize="12dp" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="13dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="50dp"
-                    android:visibility="gone"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="10dp"
 
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="5dp"
-                            android:layout_weight="2"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:weightSum="5">
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="New cases"
-                                android:textColor="@color/confirm"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text=" New Deaths"
-                                android:textColor="@color/death"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Total cases"
-                                android:textColor="@color/confirm"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Total Deaths"
-                                android:textColor="@color/death"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:text="Total recovered"
-                                android:textColor="@color/recover"
-                                android:textStyle="bold" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="5dp"
-                            android:layout_weight="2"
-                            android:orientation="vertical"
-                            android:padding="10dp"
-                            android:weightSum="5">
-
-                            <TextView
-                                android:id="@+id/newCasesTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/confirm"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/newDeathsTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/death"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/totalTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/confirm"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/deathTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/death"
-                                android:textSize="18sp" />
-
-
-                            <TextView
-                                android:id="@+id/recoverdTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:textColor="@color/recover"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/searchButton"
@@ -276,6 +143,144 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:weightSum="5">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="New cases"
+                    android:textColor="@color/confirm"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text=" New Deaths"
+                    android:textColor="@color/death"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Total cases"
+                    android:textColor="@color/confirm"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Total Deaths"
+                    android:textColor="@color/death"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Total recovered"
+                    android:textColor="@color/recover"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:weightSum="5">
+
+                <TextView
+                    android:id="@+id/newCasesTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/confirm"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/newDeathsTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/death"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/totalTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/confirm"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/deathTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/death"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/recoverdTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/recover"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
 
 
     <LinearLayout
@@ -310,6 +315,7 @@
             android:textAlignment="center"
             android:textColor="@color/white" />
     </LinearLayout>
+
 
 
 
