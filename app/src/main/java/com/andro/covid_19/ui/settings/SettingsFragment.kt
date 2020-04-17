@@ -53,15 +53,20 @@ class SettingsFragment : Fragment() {
         super.onStart()
         countryNumberInArray = SavedPreferences.getCountry()!!
         controlView()
-        settingSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        settingSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.colorPrimary
+            )
+        )
         settingSwipeRefreshLayout.setOnRefreshListener {
             controlView()
 
         }
 
     }
-    private fun controlView()
-    {
+
+    private fun controlView() {
         if (isNetworkConnected(activity!!)) {
 
             settingLayout.visibility = View.VISIBLE
@@ -83,9 +88,7 @@ class SettingsFragment : Fragment() {
             setupSaveButton()
             settingSwipeRefreshLayout.isRefreshing = false
 
-        }
-        else
-        {
+        } else {
             settingLayout.visibility = View.INVISIBLE
             setting_no_connection.visibility = View.VISIBLE
             settingSwipeRefreshLayout.isRefreshing = false
@@ -97,9 +100,9 @@ class SettingsFragment : Fragment() {
 
     private fun setupIntervalSpinner() {
         SavedPreferences.getInterval()?.let { intervalSpinner.setSelection(it) }
-        intervalSpinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+        intervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                countryName  = "USA"
+                countryName = "USA"
             }
 
             override fun onItemSelected(
@@ -126,14 +129,9 @@ class SettingsFragment : Fragment() {
             R.layout.my_spinner_item,
             countriesArr
         )
-
         notiCountry.adapter = adapter
-
-        if(countryNumberInArray != -1){
-            notiCountry.setSelection(countryNumberInArray)
-
-        }
-        notiCountry.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+        notiCountry.setSelection(countryNumberInArray)
+        notiCountry.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 countryName = "USA"
             }
@@ -147,6 +145,7 @@ class SettingsFragment : Fragment() {
 
                 countryName = parent?.getItemAtPosition(position).toString()
                 countryNumberInArray = position
+
             }
 
         }
@@ -154,34 +153,36 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupSaveButton() {
-        SavedPreferences.saveCountry(countryNumberInArray)
 
         saveBtn.setOnClickListener {
-            if (isNetworkConnected(activity!!))
-            {
-                if (intervalTime == 0){
+            if (isNetworkConnected(activity!!)) {
+                if (chosenPeriod == getString(R.string.none)) {
                     AlarmManagerHandler.cancelAlarm(countryName)
-                }else{
-                    AlarmManagerHandler.setAlarmManager(countryName,intervalTime)
+                } else {
+                    chosenPeriod?.let { it1 ->
+                        AlarmManagerHandler.setAlarmManager(
+                            countryName,
+                            countryNumberInArray,
+                            it1,
+                            intervalNo
+                        )
+                    }
                 }
-                Snackbar.make(view!!,
-                    "Now you will receive notifications about updates on $countryName", Snackbar.LENGTH_LONG)
+                Snackbar.make(
+                    view!!,
+                    "Now you will receive notifications about updates on $countryName",
+                    Snackbar.LENGTH_LONG
+                )
                     .setAction("Action", null).show()
 
-            if (chosenPeriod == getString(R.string.none)){
-                AlarmManagerHandler.cancelAlarm(countryName)
-            }else{
-                chosenPeriod?.let { it1 -> AlarmManagerHandler.setAlarmManager(countryName, countryNumberInArray ,it1,intervalNo) }
-            }
-            else
-            {
+            } else {
                 Snackbar.make(view!!, "Check your connection", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
 
             }
 
 
-  }
+        }
     }
 
 }

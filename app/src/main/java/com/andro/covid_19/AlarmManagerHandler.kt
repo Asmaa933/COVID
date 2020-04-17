@@ -12,9 +12,7 @@ import java.util.*
 
 object AlarmManagerHandler {
     fun setAlarmManager(country: String, countryNo: Int, interval: String, intervalNo: Int) {
-        if (SavedPreferences.getCountry() != countryNo) {
-            SavedPreferences.getCountry()?.let { cancelAlarm(country) }
-        }
+        cancelAlarm(country)
         val alarmManager =
             GlobalApplication.getApplicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent =
@@ -44,12 +42,13 @@ object AlarmManagerHandler {
                 )
             }
             GlobalApplication.getApplicationContext().getString(R.string.two_hours) -> {
-                 cal1.add(Calendar.HOUR, 2)   // for test comment this
+                cal1.add(Calendar.HOUR, 2)   // for test comment this
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     cal1.timeInMillis,
                     AlarmManager.INTERVAL_HOUR * 2,    //for teest 2 * 60 * 1000 2 min
-                     pendingIntent
+
+                    pendingIntent
                 )
             }
 
