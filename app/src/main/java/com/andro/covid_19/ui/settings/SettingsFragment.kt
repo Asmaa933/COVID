@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 //import androidx.work.ExistingPeriodicWorkPolicy
 //import androidx.work.PeriodicWorkRequestBuilder
 //import androidx.work.WorkManager
+import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
 //import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
@@ -28,7 +29,7 @@ class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
     private var chosenPeriod: String? = "2 hours"
-    private var intervalTime: Long = 2
+    private var intervalTime: Int = 2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,15 +108,15 @@ class SettingsFragment : Fragment() {
         }
         saveBtn.setOnClickListener {
 
-        /*    val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
-
-            val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
-                .setInputData(data)
-                    .build()
-
-            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)*/
-
-        }
+//            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
+//
+//            val request = PeriodicWorkRequest.Builder(WorkManagerHandler::class.java,15,TimeUnit.MINUTES)
+//                .setInputData(data)
+//                .build()
+//
+//WorkManager.getInstance()
+            AlarmManagerHandler.setAlarmManager("Egypt",2)
+  }
     }
 
 }
