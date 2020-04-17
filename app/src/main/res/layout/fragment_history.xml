@@ -124,8 +124,10 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="50dp"
                     android:background="@drawable/line"
+                    android:clickable="true"
                     android:text="@android:string/search_go"
-                    android:textColor="#ff2600" />
+                    android:textColor="#ff2600"
+                    android:focusable="true" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -146,12 +148,14 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,6 +163,7 @@
         app:layout_constraintVertical_bias="0.7">
 
         <LinearLayout
+            android:id="@+id/CardLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -179,7 +184,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="New cases"
+                    android:text="@string/new_cases"
                     android:textColor="@color/confirm"
                     android:textStyle="bold" />
 
@@ -188,7 +193,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text=" New Deaths"
+                    android:text="@string/new_deaths"
                     android:textColor="@color/death"
                     android:textStyle="bold" />
 
@@ -197,7 +202,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="Total cases"
+                    android:text="@string/total_cases_history"
                     android:textColor="@color/confirm"
                     android:textStyle="bold" />
 
@@ -206,7 +211,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="Total Deaths"
+                    android:text="@string/total_deathshistory"
                     android:textColor="@color/death"
                     android:textStyle="bold" />
 
@@ -215,7 +220,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="Total recovered"
+                    android:text="@string/total_recovered_history"
                     android:textColor="@color/recover"
                     android:textStyle="bold" />
 

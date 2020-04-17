@@ -2,6 +2,7 @@ package com.andro.covid_19.data.api_services
 
 import com.andro.covid_19.data.network.ConnectivityInterceptor
 import com.andro.retro.json_models.*
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -68,9 +69,12 @@ interface ApiInterface {
                     .build()
                 return@Interceptor chain.proceed(request)
             }
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
 
             val okHttpClient = OkHttpClient.Builder().apply {
-                readTimeout(40, TimeUnit.SECONDS)
+                readTimeout(30, TimeUnit.SECONDS)
                 connectTimeout(20, TimeUnit.SECONDS)
                     addInterceptor(requestInterceptor)
                     addInterceptor(connectivityInterceptor)
@@ -82,7 +86,7 @@ interface ApiInterface {
                 .client(okHttpClient)
                 .baseUrl("https://coronavirus-monitor.p.rapidapi.com/coronavirus/")
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(ApiInterface::class.java)
         }

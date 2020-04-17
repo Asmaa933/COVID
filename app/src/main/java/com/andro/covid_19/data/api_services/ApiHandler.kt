@@ -116,14 +116,15 @@ class ApiHandler(private val api: ApiInterface) {
 
     // get history in specific date
     // date string format 2020-04-05
-    private val _countryHistoryInDate = MutableLiveData<StatByCountry>()
-    val countryHistoryInDate: LiveData<StatByCountry>
+    private val _countryHistoryInDate = MutableLiveData<HistoryOfCountry>()
+    val countryHistoryInDate: LiveData<HistoryOfCountry>
         get() = _countryHistoryInDate
 
     suspend fun getHistoryForCountryInDate(countryName: String, date: String) {
         try {
             val getCountryHistory = api.getHistoryForCountryInDateAsync(countryName, date).await()
-            _countryHistoryInDate.postValue(getCountryHistory.stat_by_country.last())
+            _countryHistoryInDate.postValue(getCountryHistory)
+            Log.i("habl", _countryHistoryInDate.value.toString() )
         } catch (e: NoConnectivityException) {
             Log.e("Connectivity", "No internet connection.", e)
         }

@@ -7,10 +7,7 @@ import com.andro.covid_19.data.db.CountriesStatDao
 import com.andro.covid_19.data.db.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
 import com.andro.covid_19.data.db.WorldTotalStatesDao
-import com.andro.retro.json_models.AllAffectedCountries
-import com.andro.retro.json_models.CountriesStat
-import com.andro.retro.json_models.StatByCountry
-import com.andro.retro.json_models.WorldTotalStates
+import com.andro.retro.json_models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -105,10 +102,11 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     }
 
     // get History for country
-    override fun getHistoryForCountry(countryName: String, date: String): LiveData<StatByCountry> {
+    override fun getHistoryForCountry(countryName: String, date: String): LiveData<HistoryOfCountry> {
     launch {  apiHandler.getHistoryForCountryInDate(countryName , date) }
         return apiHandler.countryHistoryInDate
     }
+
 
 
 }
