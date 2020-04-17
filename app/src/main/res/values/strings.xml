@@ -58,5 +58,6 @@
     <string name="total_cases_history">Total cases</string>
     <string name="new_deaths">New Deaths</string>
     <string name="new_cases">New cases</string>
+    <string name="search">Search</string>
 
 </resources>
