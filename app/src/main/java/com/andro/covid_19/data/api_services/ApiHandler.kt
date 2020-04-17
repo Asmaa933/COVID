@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andro.covid_19.NoConnectivityException
 import com.andro.retro.json_models.*
+import java.io.IOException
+import java.net.SocketTimeoutException
 
 class ApiHandler(private val api: ApiInterface) {
 
@@ -39,6 +41,13 @@ class ApiHandler(private val api: ApiInterface) {
         } catch (e: NoConnectivityException) {
             Log.e("Connectivity", "No internet connection.", e)
         }
+        catch (e:SocketTimeoutException)
+        {
+            Log.e("Connectivity", "SocketTimeout.", e)
+        } catch (e: IOException)
+        {
+            Log.e("Connectivity", "IOException.", e)
+        }
     }
 
     //get cases for each country
@@ -51,6 +60,13 @@ class ApiHandler(private val api: ApiInterface) {
             val getCountriesCases = api.getCaseByCountryAsync().await()
             _allCountriesCases.postValue(getCountriesCases)
         } catch (e: NoConnectivityException) {
+            Log.e("Connectivity", "No internet connection.", e)
+        }
+        catch (e:SocketTimeoutException)
+        {
+            Log.e("Connectivity", "No internet connection.", e)
+        } catch (e: IOException)
+        {
             Log.e("Connectivity", "No internet connection.", e)
         }
     }
@@ -68,6 +84,13 @@ class ApiHandler(private val api: ApiInterface) {
             Log.e("Connectivity", "No internet connection.", e)
 
         }
+        catch (e:SocketTimeoutException)
+        {
+            Log.e("Connectivity", "No internet connection.", e)
+        } catch (e: IOException)
+        {
+            Log.e("Connectivity", "No internet connection.", e)
+        }
     }
 
     // get world state
@@ -80,6 +103,13 @@ class ApiHandler(private val api: ApiInterface) {
             val getWorldState = api.getWorldTotalStateAsync().await()
             _worldState.postValue(getWorldState)
         } catch (e: NoConnectivityException) {
+            Log.e("Connectivity", "No internet connection.", e)
+        }
+        catch (e:SocketTimeoutException)
+        {
+            Log.e("Connectivity", "No internet connection.", e)
+        } catch (e: IOException)
+        {
             Log.e("Connectivity", "No internet connection.", e)
         }
     }
@@ -96,6 +126,13 @@ class ApiHandler(private val api: ApiInterface) {
             _countryHistoryInDate.postValue(getCountryHistory.stat_by_country.last())
         } catch (e: NoConnectivityException) {
             Log.e("Connectivity", "No internet connection.", e)
+        }
+        catch (e:SocketTimeoutException)
+        {
+            Log.e("Connectivity", "SocketTimeoutException.", e)
+        } catch (e: IOException)
+        {
+            Log.e("Connectivity", "IOException.", e)
         }
     }
 

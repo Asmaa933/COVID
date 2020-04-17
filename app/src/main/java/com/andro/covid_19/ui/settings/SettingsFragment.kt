@@ -9,12 +9,12 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.Data
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+//import androidx.work.Data
+//import androidx.work.ExistingPeriodicWorkPolicy
+//import androidx.work.PeriodicWorkRequestBuilder
+//import androidx.work.WorkManager
 import com.andro.covid_19.R
-import com.andro.covid_19.WorkManagerHandler
+//import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
 import com.andro.covid_19.ui.history.HistoryViewModel
 import com.andro.covid_19.ui.home.HomeViewModel
@@ -107,13 +107,13 @@ class SettingsFragment : Fragment() {
         }
         saveBtn.setOnClickListener {
 
-            val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
+        /*    val data = Data.Builder().putString(getString(R.string.country_name), countryName).build()
 
             val request = PeriodicWorkRequestBuilder<WorkManagerHandler>(15, TimeUnit.MINUTES)
                 .setInputData(data)
                     .build()
 
-            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)
+            WorkManager.getInstance().enqueueUniquePeriodicWork("key", ExistingPeriodicWorkPolicy.REPLACE, request)*/
 
         }
     }

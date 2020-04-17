@@ -69,7 +69,7 @@ interface ApiInterface {
             }
 
             val okHttpClient = OkHttpClient.Builder().apply {
-                readTimeout(30, TimeUnit.SECONDS)
+                readTimeout(40, TimeUnit.SECONDS)
                 connectTimeout(20, TimeUnit.SECONDS)
                     addInterceptor(requestInterceptor)
                     addInterceptor(connectivityInterceptor)
