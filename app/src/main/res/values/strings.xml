@@ -67,6 +67,6 @@
     <string name="date_error">choose date for search</string>
     <string name="action">Action</string>
     <string name="wait_moment">Please wait a moment</string>
-    <string name= "connect_error">cannot connect right now</string>
+    <string name= "connect_error">Cannot connect right now</string>
 
 </resources>

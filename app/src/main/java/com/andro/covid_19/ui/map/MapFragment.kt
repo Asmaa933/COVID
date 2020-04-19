@@ -50,7 +50,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             }
             else
             {
-                Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+                Snackbar.make(view!!, getString(R.string.connect_error), Snackbar.LENGTH_LONG)
                     .setAction((getString(R.string.action)), null).show()
             }
         }
@@ -75,7 +75,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
         if (!isNetworkConnected(activity!!))
         {
-            Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+            Snackbar.make(view!!, getString(R.string.connect_error), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.action), null).show()
         }
         else

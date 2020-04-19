@@ -308,17 +308,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@android:drawable/ic_dialog_info" />
+            app:srcCompat="@drawable/con" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/check_connection"
-            android:textAlignment="center"
-            android:textColor="@color/font_color" />
+
     </LinearLayout>
 
 

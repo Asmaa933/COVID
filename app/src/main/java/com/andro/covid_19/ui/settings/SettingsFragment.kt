@@ -19,12 +19,11 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment : Fragment() {
-    private var countryName: String = getString(R.string.usa)
+    private var countryName: String = "USA"
     private lateinit var settingsViewModel: SettingsViewModel
-    private var chosenPeriod: String? = getString(R.string.none)
+    private var chosenPeriod: String? = "None"
     private var countryNumberInArray = -1
     private var intervalNo = 0
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -166,7 +165,7 @@ class SettingsFragment : Fragment() {
                     .setAction(getString(R.string.action), null).show()
 
             } else {
-                Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+                Snackbar.make(view!!, getString(R.string.connect_error), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.action), null).show()
 
             }
