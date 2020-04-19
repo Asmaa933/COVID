@@ -1,15 +1,15 @@
 package com.andro.covid_19.data.db
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import com.andro.covid_19.data.db.dao.CountriesStatDao
+import com.andro.covid_19.data.db.dao.CountrystatDao
+import com.andro.covid_19.data.db.dao.WorldTotalStatesDao
 import com.andro.retro.json_models.CountriesStat
 import com.andro.retro.json_models.StatByCountry
 import com.andro.retro.json_models.WorldTotalStates
-import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [StatByCountry::class, CountriesStat::class, WorldTotalStates::class ],

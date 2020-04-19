@@ -4,9 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.os.SystemClock
-import com.google.gson.GsonBuilder
 import java.util.*
 
 
@@ -47,7 +44,6 @@ object AlarmManagerHandler {
                     AlarmManager.RTC_WAKEUP,
                     cal1.timeInMillis,
                     AlarmManager.INTERVAL_HOUR * 2,    //for teest 2 * 60 * 1000 2 min
-
                     pendingIntent
                 )
             }

@@ -27,6 +27,4 @@ class HomeViewModel() : ViewModel() {
     fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesState()
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>> = repository.getWorldTotalStates()
 
-
-
 }

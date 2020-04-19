@@ -10,23 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-//import androidx.work.Data
-//import androidx.work.ExistingPeriodicWorkPolicy
-//import androidx.work.PeriodicWorkRequestBuilder
-//import androidx.work.WorkManager
 import com.andro.covid_19.AlarmManagerHandler
 import com.andro.covid_19.R
 import com.andro.covid_19.SavedPreferences
-//import com.andro.covid_19.WorkManagerHandler
 import com.andro.covid_19.isNetworkConnected
-import com.andro.covid_19.ui.history.HistoryViewModel
-import com.andro.covid_19.ui.home.HomeViewModel
 import com.andro.retro.json_models.AllAffectedCountries
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_history.*
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.time.Duration
-import java.util.concurrent.TimeUnit
 
 class SettingsFragment : Fragment() {
     private var countryName: String = "USA"
@@ -34,7 +24,6 @@ class SettingsFragment : Fragment() {
     private var chosenPeriod: String? = "None"
     private var countryNumberInArray = -1
     private var intervalNo = 0
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,7 +91,7 @@ class SettingsFragment : Fragment() {
         SavedPreferences.getInterval()?.let { intervalSpinner.setSelection(it) }
         intervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                countryName = "USA"
+                countryName = getString(R.string.usa)
             }
 
             override fun onItemSelected(
@@ -121,8 +110,8 @@ class SettingsFragment : Fragment() {
     }
 
     fun setupCountrySpinner(countriesArr: List<String>) {
-        notiCountry.setTitle("Select country")
-        notiCountry.setPositiveButton("OK");
+        notiCountry.setTitle(getString(R.string.select_country))
+        notiCountry.setPositiveButton(getString(R.string.ok));
 
         var adapter = ArrayAdapter(
             activity!!,
@@ -133,7 +122,7 @@ class SettingsFragment : Fragment() {
         notiCountry.setSelection(countryNumberInArray)
         notiCountry.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                countryName = "USA"
+                countryName = getString(R.string.usa)
             }
 
             override fun onItemSelected(
@@ -170,14 +159,14 @@ class SettingsFragment : Fragment() {
                 }
                 Snackbar.make(
                     view!!,
-                    "Now you will receive notifications about updates on $countryName",
+                    "Subscribe successfully on $countryName updates",
                     Snackbar.LENGTH_LONG
                 )
-                    .setAction("Action", null).show()
+                    .setAction(getString(R.string.action), null).show()
 
             } else {
-                Snackbar.make(view!!, "Check your connection", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                Snackbar.make(view!!, getString(R.string.connect_error), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action), null).show()
 
             }
 
