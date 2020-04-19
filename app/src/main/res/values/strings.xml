@@ -17,7 +17,6 @@
     <string name="country">Country</string>
 
 
-
     <string name="menu_home">Home</string>
     <string name="menu_history">History</string>
     <string name="menu_settings">Settings</string>
@@ -42,10 +41,10 @@
         <item>5 hours</item>
         <item>Once a day</item>
     </string-array>
-    <string name= "two_hours">2 hours</string>
-    <string name= "one_hour">1 hour</string>
-    <string name= "five_hours">5 hours</string>
-    <string name= "once_day"> Once a day</string>
+    <string name="two_hours">2 hours</string>
+    <string name="one_hour">1 hour</string>
+    <string name="five_hours">5 hours</string>
+    <string name="once_day"> Once a day</string>
     <string name="country_data">countryData</string>
     <string name="total_cases">totalCases</string>
     <string name="country_name">countryName</string>
@@ -60,5 +59,8 @@
     <string name="new_cases">New cases</string>
     <string name="search">Search</string>
     <string name="interval_number">intervalNumber</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
