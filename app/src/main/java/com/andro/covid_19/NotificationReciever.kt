@@ -19,21 +19,24 @@ class NotificationReciever: BroadcastReceiver() {
     override fun onReceive(p0: Context?, p1: Intent?) {
         val api = ApiInterface(ConnectivityInterceptorImpl(SettingsViewModel.context))
         val apiHandler = ApiHandler(api)
-        val countryName =p1?.getStringExtra(GlobalApplication.getApplicationContext().getString(R.string.country_name))
-        GlobalScope.launch (Dispatchers.Main){
-            if (countryName != null) {
-                apiHandler.getSpecificCountryState(countryName)
-            }
-            apiHandler.specificCountryState.observeForever {
-                val update: String = "Total: ${it.latest_stat_by_country[0].total_cases} Recovered: ${it.latest_stat_by_country[0].total_recovered} Deaths: ${it.latest_stat_by_country[0].total_deaths}  "
-                countryName?.let { it1 -> createNotification(it1, update) }
+        val countryName =
+            p1?.getStringExtra(GlobalApplication.getApplicationContext().getString(R.string.country_name))
+
+            GlobalScope.launch(Dispatchers.Main) {
+                if (countryName != null) {
+                    apiHandler.getSpecificCountryState(countryName)
+                }
+                apiHandler.specificCountryState.observeForever {
+                    val update: String =
+                        "Total: ${it.latest_stat_by_country[0].total_cases} Recovered: ${it.latest_stat_by_country[0].total_recovered} Deaths: ${it.latest_stat_by_country[0].total_deaths}  "
+                    countryName?.let { it1 -> createNotification(it1, update) }
+                }
+
             }
 
         }
 
     }
-
-}
 
 
     fun createNotification(country: String, update: String) {

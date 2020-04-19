@@ -47,7 +47,7 @@
                         android:layout_weight="1"
                         android:fontFamily="serif"
                         android:text="Choose country : "
-                        android:textColor="@color/white"
+                        android:textColor="@color/font_color"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -56,9 +56,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/font_color"
                         android:padding="5dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/font_color"
 
                         />
 
@@ -82,7 +82,7 @@
                         android:layout_weight="2"
                         android:fontFamily="serif"
                         android:text="@string/choose_date"
-                        android:textColor="@color/white"
+                        android:textColor="@color/font_color"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="1"
                             android:fontFamily="serif"
-                            android:textColor="@color/white"
+                            android:textColor="@color/font_color"
                             android:textSize="12dp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -137,7 +137,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="30dp"
-                    app:cardBackgroundColor="@color/white"
+                    app:cardBackgroundColor="@color/font_color"
                     app:cardCornerRadius="10dp"
                     android:visibility="invisible"
                  >
@@ -317,7 +317,7 @@
             android:gravity="center"
             android:text="@string/Check_you_connection"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/font_color" />
     </LinearLayout>
 
 

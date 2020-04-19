@@ -55,16 +55,12 @@ class HistoryFragment : Fragment() {
              cardView.visibility = View.INVISIBLE
              CardLinearLayout.visibility = View.INVISIBLE
             if (isNetworkConnected(activity!!)) {
-               // Log.i("habl","ljhg")
                 progress_bar.visibility = View.VISIBLE
                 if (date != null&&countryName!=null) {
-                    //Log.i("habl",date +countryName )
                    historyViewModel.getHistoryForCountry(countryName!!, showDateTxt.text.toString()).observe(viewLifecycleOwner, Observer<HistoryOfCountry> {
                        Log.i("habl",it.toString() )
                        if (it != null) {
-                               // Log.i("habl",it.toString() )
                                 checkIfItIsOldData(it)
-                               // Log.i("habl","observe")
 
                             } else {
                                 cardView.visibility = View.INVISIBLE
@@ -271,12 +267,6 @@ class HistoryFragment : Fragment() {
 
     }
 
-    fun enableViews(flag: Boolean) {
-        dateTxt.isEnabled = flag
-        searchButton.isEnabled = flag
-        spinner.isEnabled = flag
-
-    }
 
 
 }
