@@ -1,6 +1,7 @@
 package com.andro.covid_19.data.repositary
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import com.andro.covid_19.data.api_services.ApiHandler
 import com.andro.covid_19.data.db.CountriesStatDao
@@ -105,6 +106,11 @@ class covidRepositoryImpl(context: Context, private var apiHandler: ApiHandler) 
     override fun getHistoryForCountry(countryName: String, date: String): LiveData<HistoryOfCountry> {
     launch {  apiHandler.getHistoryForCountryInDate(countryName , date) }
         return apiHandler.countryHistoryInDate
+    }
+
+    override fun getRandomPicture(): LiveData<Bitmap> {
+        launch {  apiHandler.getRandomPicture() }
+        return apiHandler.randomImage
     }
 
 

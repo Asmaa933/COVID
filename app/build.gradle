@@ -99,6 +99,9 @@ dependencies {
 
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.7'
+    implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
+
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
 
     //work manager
     //def work_version = "1.0.1"

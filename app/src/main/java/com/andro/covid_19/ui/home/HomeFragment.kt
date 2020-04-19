@@ -25,7 +25,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
-    private var Mapcountries: ArrayList<CountriesStat> = ArrayList<CountriesStat>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,13 +32,8 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-       // setupObserversBasedRoom()
         setHasOptionsMenu(true)
         setupObserversBasedNatwork()
-
-
-
-
         return root
 
 
@@ -60,15 +54,12 @@ class HomeFragment : Fragment() {
                 swipeRefreshLayout.isRefreshing = false
             }
 
-
-
         }
     }
 
     private fun renderCountries(countries: List<CountriesStat>) {
         progress_bar.visibility = View.GONE
         homeAdapter = HomeAdapter(countries)
-        Mapcountries = countries as ArrayList<CountriesStat>
         val layoutManger = LinearLayoutManager(getActivity())
         //layoutManger.stackFromEnd = true
         allCounties_recyclerview.layoutManager = layoutManger
@@ -113,11 +104,7 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.mapButton) {
-            /*val bundle = Bundle().also {
-                it.putSerializable("Mapcountries", Mapcountries)
-            }*/
             val mapFragment: Fragment = MapFragment()
-           // MapFragment.arguments = bundle
             val fragmentManager: FragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.nav_host_fragment,  mapFragment)
