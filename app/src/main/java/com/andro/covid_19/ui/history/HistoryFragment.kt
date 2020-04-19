@@ -26,7 +26,7 @@ import kotlin.collections.ArrayList
 
 
 class HistoryFragment : Fragment() {
-    private var countryName: String = getString(R.string.usa)
+    private var countryName: String = "USA"
     private var date: String? = null
     private lateinit var historyViewModel: HistoryViewModel
 
@@ -35,7 +35,6 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         HistoryViewModel.context = this.context!!
 
         historyViewModel =
@@ -139,6 +138,7 @@ class HistoryFragment : Fragment() {
             history_layout.visibility = View.INVISIBLE
             no_connection.visibility = View.VISIBLE
             cardView.visibility = View.INVISIBLE
+            progress_bar.visibility = View.INVISIBLE
             historySwipeRefresh.isRefreshing = false
         }
     }

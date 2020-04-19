@@ -124,7 +124,6 @@ class ApiHandler(private val api: ApiInterface) {
         try {
             val getCountryHistory = api.getHistoryForCountryInDateAsync(countryName, date).await()
             _countryHistoryInDate.postValue(getCountryHistory)
-            Log.i("habl", _countryHistoryInDate.value.toString() )
         } catch (e: NoConnectivityException) {
             Log.e("Connectivity", "No internet connection.", e)
         }

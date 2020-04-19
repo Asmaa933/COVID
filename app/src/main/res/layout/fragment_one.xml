@@ -10,7 +10,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/first"
+            android:src="@drawable/one"
             android:contentDescription="@string/InstructionContent" />
 
 </FrameLayout>

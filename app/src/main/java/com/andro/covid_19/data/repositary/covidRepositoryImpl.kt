@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import com.andro.covid_19.data.api_services.ApiHandler
-import com.andro.covid_19.data.db.CountriesStatDao
-import com.andro.covid_19.data.db.CountrystatDao
+import com.andro.covid_19.data.db.dao.CountriesStatDao
+import com.andro.covid_19.data.db.dao.CountrystatDao
 import com.andro.covid_19.data.db.CovidDataBase
-import com.andro.covid_19.data.db.WorldTotalStatesDao
+import com.andro.covid_19.data.db.dao.WorldTotalStatesDao
 import com.andro.retro.json_models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

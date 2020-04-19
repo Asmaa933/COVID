@@ -1,4 +1,4 @@
-package com.andro.covid_19.data.db
+package com.andro.covid_19.data.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

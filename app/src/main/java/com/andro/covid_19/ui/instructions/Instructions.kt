@@ -17,37 +17,11 @@ import com.github.paolorotolo.appintro.model.SliderPage
 
 class instructions : AppIntro() {
 
-    private lateinit var instructionsViewModel:InstructionViewModel
-    lateinit var img1:Bitmap
-    lateinit var img2:Bitmap
-    lateinit var img3:Bitmap
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        InstructionViewModel.context = this
-       // setContentView(R.layout.activity_instructions)
-        instructionsViewModel = ViewModelProviders.of(this).get(InstructionViewModel::class.java)
-       /* val sliderPage = SliderPage()
-        sliderPage.imageDrawable =R.drawable.three
+        supportActionBar?.hide()
 
-        sliderPage.bgColor = R.color.home_color
-        addSlide(AppIntroFragment.newInstance(sliderPage))
 
-                addSlide(
-           AppIntroFragment.newInstance("", "",
-            R.drawable.first, ContextCompat.getColor(getApplicationContext(), R.color.home_color)))
-         addSlide(AppIntroFragment.newInstance("", "",
-            R.drawable.two, ContextCompat.getColor(getApplicationContext(), R.color.home_color)))
-        addSlide(AppIntroFragment.newInstance("", "",
-            R.drawable.three, ContextCompat.getColor(getApplicationContext(), R.color.home_color)))
-        addSlide(AppIntroFragment.newInstance("", "",
-            R.drawable.four, ContextCompat.getColor(getApplicationContext(), R.color.home_color)));
-        addSlide(AppIntroFragment.newInstance("", "",
-            R.drawable.five, ContextCompat.getColor(getApplicationContext(), R.color.home_color)));
-        addSlide(AppIntroFragment.newInstance("", "",
-            R.drawable.six, ContextCompat.getColor(getApplicationContext(), R.color.home_color)));*/
         addSlide(one());
         addSlide(two());
         addSlide(three());

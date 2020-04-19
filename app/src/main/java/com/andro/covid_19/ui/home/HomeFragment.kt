@@ -28,7 +28,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
-    private var Mapcountries: ArrayList<CountriesStat> = ArrayList()
 
 
     override fun onCreateView(
@@ -40,8 +39,16 @@ class HomeFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         setHasOptionsMenu(true)
-        setupObserversBasedNetwork()
+
+            setupObserversBasedNetwork()
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (isNetworkConnected(activity!!)) {
+            no_connectionLayout.visibility = View.INVISIBLE
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -91,7 +98,6 @@ class HomeFragment : Fragment() {
     private fun renderCountries(countries: List<CountriesStat>) {
         progress_bar.visibility = View.GONE
             homeAdapter = HomeAdapter(countries)
-            Mapcountries = countries as ArrayList<CountriesStat>
             val layoutManger = LinearLayoutManager(getActivity())
             allCounties_recyclerview.layoutManager = layoutManger
             allCounties_recyclerview.adapter = homeAdapter
@@ -110,7 +116,6 @@ class HomeFragment : Fragment() {
         } else {
             totalLinearLayout.visibility = View.INVISIBLE
             headerLinearLayout.visibility = View.INVISIBLE
-            no_connectionLayout.visibility = View.VISIBLE
 
         }
 
