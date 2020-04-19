@@ -5,7 +5,22 @@
 - It shows worldwide data of confirmed, recovered and death cases. Users can also get country-wise data.
 - user can search for cases in country on specific day
 ## Screenshots
-Still working on it 
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/44899782/79701714-9df96680-829f-11ea-9020-c2fa56532e15.png" width= "100"> 
+  <img src="https://user-images.githubusercontent.com/44899782/79701716-9f2a9380-829f-11ea-80c0-b9c473aeaf29.png" width="100" padding-left = "10px">
+  <img src="https://user-images.githubusercontent.com/44899782/79701717-9fc32a00-829f-11ea-816c-a7a630df83e2.png" width="100">
+  <img src="https://user-images.githubusercontent.com/44899782/79701719-a0f45700-829f-11ea-9cb4-7a30267c6109.png" width="100">
+  <img src="https://user-images.githubusercontent.com/44899782/79701721-a18ced80-829f-11ea-8470-289474eaba37.png" width="100"
+
+</p>
 
 ## Build With: 
-Kotlin
+- Kotlin
+- SQLite using Room
+- Retrofit , OkHttp
+- Coroutine 
+- Alarm Manager
+
+- COVID-19 Api: https://rapidapi.com/astsiatsko/api/coronavirus-monitor/endpoints
+
+
