@@ -1,5 +1,6 @@
 package com.andro.covid_19.data.repositary
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import com.andro.retro.json_models.*
 
@@ -14,6 +15,7 @@ interface covidRepository {
 
     fun getHistoryForCountry(countryName: String, date: String): LiveData<HistoryOfCountry>
     fun getAffectedCountries(): LiveData<AllAffectedCountries>
+    fun getRandomPicture():LiveData<Bitmap>
 
 
 

@@ -17,7 +17,33 @@ class splash : AppCompatActivity() {
           startActivity(Intent(this@splash,instructions::class.java))
             finish()
         }, 1500)
+
+       /* if (isNetworkConnected(this))
+        {
+            config = EasySplashScreen(this)
+                .withFullScreen()
+                .withTargetActivity(instructions::class.java)
+                .withSplashTimeOut(3000)
+                .withBackgroundColor(Color.parseColor("#3282b8"))
+                .withAfterLogoText("Take only memories, leave only footprints. ")
+                .withLogo(R.drawable.covid);
+        }
+        else {
+            config =EasySplashScreen(this)
+                .withFullScreen()
+                .withTargetActivity( MainActivity::class.java)
+                .withSplashTimeOut(3000)
+                .withBackgroundColor(Color.parseColor("#0f4c75"))
+                .withAfterLogoText("People don't take trips, trips take people.")
+                .withLogo(R.drawable.covid);
+        }
+        config.getAfterLogoTextView().setTextColor(Color.WHITE);
+
+        val easySplashScreen:View = config.create();
+        setContentView(easySplashScreen);
+    }*/
     }
+
 }
 
 
