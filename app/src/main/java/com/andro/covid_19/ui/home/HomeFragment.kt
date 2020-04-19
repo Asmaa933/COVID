@@ -44,12 +44,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (isNetworkConnected(activity!!)) {
-            no_connectionLayout.visibility = View.INVISIBLE
-        }
-    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -116,7 +111,9 @@ class HomeFragment : Fragment() {
         } else {
             totalLinearLayout.visibility = View.INVISIBLE
             headerLinearLayout.visibility = View.INVISIBLE
-
+            if (!isNetworkConnected(activity!!)) {
+                no_connectionLayout.visibility = View.VISIBLE
+            }
         }
 
     }

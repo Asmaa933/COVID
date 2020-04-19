@@ -44,7 +44,6 @@ object AlarmManagerHandler {
                     AlarmManager.RTC_WAKEUP,
                     cal1.timeInMillis,
                     AlarmManager.INTERVAL_HOUR * 2,    //for teest 2 * 60 * 1000 2 min
-
                     pendingIntent
                 )
             }
