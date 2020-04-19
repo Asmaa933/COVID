@@ -8,8 +8,6 @@ import com.andro.covid_19.R
 import com.andro.covid_19.ui.instructions.instructions
 
 class splash : AppCompatActivity() {
-    protected var _active = true
-    protected var _splashTime = 1500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

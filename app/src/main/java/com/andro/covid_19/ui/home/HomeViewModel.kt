@@ -27,13 +27,4 @@ class HomeViewModel() : ViewModel() {
     fun getCountriesData(): LiveData<List<CountriesStat>> = repository.getAllCountriesState()
     fun getWorldTotalStates(): LiveData<List<WorldTotalStates>> = repository.getWorldTotalStates()
 
-    fun isOnline(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
-                as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        return networkInfo != null && networkInfo.isConnected
-    }
-
-
-
 }

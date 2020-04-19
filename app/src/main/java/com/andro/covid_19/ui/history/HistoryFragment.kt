@@ -3,7 +3,6 @@ package com.andro.covid_19.ui.history
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +16,7 @@ import com.andro.covid_19.R
 import com.andro.covid_19.isNetworkConnected
 import com.andro.retro.json_models.AllAffectedCountries
 import com.andro.retro.json_models.HistoryOfCountry
-import com.andro.retro.json_models.StatByCountry
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 import kotlinx.android.synthetic.main.fragment_history.*
-import kotlinx.android.synthetic.main.fragment_history.progress_bar
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,9 +26,8 @@ import kotlin.collections.ArrayList
 
 
 class HistoryFragment : Fragment() {
-    private var countryName: String = "USA"
+    private var countryName: String = getString(R.string.usa)
     private var date: String? = null
-    private  var oldData:HistoryOfCountry? = null
     private lateinit var historyViewModel: HistoryViewModel
 
     override fun onCreateView(
@@ -47,31 +41,33 @@ class HistoryFragment : Fragment() {
         historyViewModel =
             ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_history, container, false)
-        val  searchButton = root.findViewById(R.id.searchButton) as Button
+        val searchButton = root.findViewById(R.id.searchButton) as Button
         val cardView = root.findViewById(R.id.cardView) as CardView
-        val  CardLinearLayout = root.findViewById(R.id. CardLinearLayout) as LinearLayout
+        val CardLinearLayout = root.findViewById(R.id.CardLinearLayout) as LinearLayout
 
-         searchButton.setOnClickListener {
-             cardView.visibility = View.INVISIBLE
-             CardLinearLayout.visibility = View.INVISIBLE
+        searchButton.setOnClickListener {
+            cardView.visibility = View.INVISIBLE
+            CardLinearLayout.visibility = View.INVISIBLE
             if (isNetworkConnected(activity!!)) {
                 progress_bar.visibility = View.VISIBLE
-                if (date != null&&countryName!=null) {
-                   historyViewModel.getHistoryForCountry(countryName!!, showDateTxt.text.toString()).observe(viewLifecycleOwner, Observer<HistoryOfCountry> {
-                       Log.i("habl",it.toString() )
-                       if (it != null) {
-                                checkIfItIsOldData(it)
+                if (date != null && countryName != null) {
+                    historyViewModel.getHistoryForCountry(
+                        countryName!!,
+                        showDateTxt.text.toString()
+                    ).observe(viewLifecycleOwner, Observer<HistoryOfCountry> {
+                        if (it != null) {
+                            checkIfItIsOldData(it)
 
-                            } else {
-                                cardView.visibility = View.INVISIBLE
-                                CardLinearLayout.visibility = View.INVISIBLE
-                                progress_bar.visibility = View.INVISIBLE
-                                Toast.makeText(activity!!, "no data", Toast.LENGTH_LONG).show()
-                            }
+                        } else {
+                            cardView.visibility = View.INVISIBLE
+                            CardLinearLayout.visibility = View.INVISIBLE
+                            progress_bar.visibility = View.INVISIBLE
+                            Toast.makeText(activity!!, getString(R.string.no_data), Toast.LENGTH_LONG).show()
+                        }
 
-                        })
+                    })
                 } else {
-                    Toast.makeText(activity!!, "choose date for search", Toast.LENGTH_LONG)
+                    Toast.makeText(activity!!, getString(R.string.date_error), Toast.LENGTH_LONG)
                         .show()
                     progress_bar.visibility = View.INVISIBLE
 
@@ -85,70 +81,21 @@ class HistoryFragment : Fragment() {
             }
 
         }
-       /* searchButton.setOnClickListener {
-            cardView.visibility = View.INVISIBLE
-            CardLinearLayout.visibility = View.INVISIBLE
-            if (isNetworkConnected(activity!!)) {
-                Log.i("habl", "ljhg")
-                progress_bar.visibility = View.VISIBLE
-                if (date != null && countryName != null) {
-                    Log.i("habl", date + countryName)
 
-                    val historyCountry = historyViewModel.getHistoryForCountry(
-                        countryName!!,
-                        showDateTxt.text.toString()
-                    ).value
-                    if (historyCountry != null) {
-                        Log.i("habl", it.toString())
-                        cardView.visibility = View.VISIBLE
-                        CardLinearLayout.visibility = View.VISIBLE
-                        newCasesTxt.text = historyCountry.stat_by_country.first().new_cases
-                        newDeathsTxt.text = historyCountry.stat_by_country.first().new_deaths
-                        recoverdTxt.text = historyCountry.stat_by_country.first().total_recovered
-                        totalTxt.text = historyCountry.stat_by_country.first().total_cases
-                        deathTxt.text = historyCountry.stat_by_country.first().total_deaths
-                        progress_bar.visibility = View.INVISIBLE
-                        Log.i("habl", "observe")
-                    } else {
-                        cardView.visibility = View.INVISIBLE
-                        CardLinearLayout.visibility = View.INVISIBLE
-                        progress_bar.visibility = View.INVISIBLE
-                        Toast.makeText(activity!!, "no data", Toast.LENGTH_LONG).show()
-                    }
-
-
-                } else {
-                    Toast.makeText(activity!!, "choose date for search", Toast.LENGTH_LONG)
-                        .show()
-                    progress_bar.visibility = View.INVISIBLE
-
-                }
-            } else {
-                history_layout.visibility = View.INVISIBLE
-                cardView.visibility = View.INVISIBLE
-                CardLinearLayout.visibility = View.INVISIBLE
-                no_connection.visibility = View.VISIBLE
-
-            }
-
-
-        }*/
-
-            return root
+        return root
     }
-    fun checkIfItIsOldData(historyOfCountry:HistoryOfCountry)
-    {
-       GlobalScope.launch(Dispatchers.Main) {
-           Log.i("habl","observe")
-           progress_bar.visibility = View.INVISIBLE
-           cardView.visibility = View.VISIBLE
-           CardLinearLayout.visibility = View.VISIBLE
-           newCasesTxt.text = historyOfCountry.stat_by_country.last().new_cases
-           newDeathsTxt.text = historyOfCountry.stat_by_country.last().new_deaths
-           recoverdTxt.text = historyOfCountry.stat_by_country.last().total_recovered
-           totalTxt.text = historyOfCountry.stat_by_country.last().total_cases
-           deathTxt.text = historyOfCountry.stat_by_country.last().total_deaths
-       }
+
+    fun checkIfItIsOldData(historyOfCountry: HistoryOfCountry) {
+        GlobalScope.launch(Dispatchers.Main) {
+            progress_bar.visibility = View.INVISIBLE
+            cardView.visibility = View.VISIBLE
+            CardLinearLayout.visibility = View.VISIBLE
+            newCasesTxt.text = historyOfCountry.stat_by_country.last().new_cases
+            newDeathsTxt.text = historyOfCountry.stat_by_country.last().new_deaths
+            recoverdTxt.text = historyOfCountry.stat_by_country.last().total_recovered
+            totalTxt.text = historyOfCountry.stat_by_country.last().total_cases
+            deathTxt.text = historyOfCountry.stat_by_country.last().total_deaths
+        }
 
 
     }
@@ -157,15 +104,19 @@ class HistoryFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         viewControl()
-        historySwipeRefresh.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        historySwipeRefresh.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.colorPrimary
+            )
+        )
         historySwipeRefresh.setOnRefreshListener {
             viewControl()
 
-         }
+        }
     }
 
-    private fun viewControl()
-    {
+    private fun viewControl() {
         if (isNetworkConnected(activity!!)) {
 
             history_layout.visibility = View.VISIBLE
@@ -184,8 +135,7 @@ class HistoryFragment : Fragment() {
                 })
             historySwipeRefresh.isRefreshing = false
 
-        }else
-        {
+        } else {
             history_layout.visibility = View.INVISIBLE
             no_connection.visibility = View.VISIBLE
             cardView.visibility = View.INVISIBLE
@@ -194,12 +144,10 @@ class HistoryFragment : Fragment() {
     }
 
 
-
-
     private fun setupSearch(countriesArr: List<String>) {
 
-        spinner.setTitle("Select country")
-        spinner.setPositiveButton("OK");
+        spinner.setTitle(getString(R.string.select_country))
+        spinner.setPositiveButton(getString(R.string.ok));
 
         var adapter = ArrayAdapter(
             activity!!,
@@ -207,9 +155,9 @@ class HistoryFragment : Fragment() {
             countriesArr
         )
         spinner.adapter = adapter
-        spinner.onItemSelectedListener = object:AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                countryName  = "USA"
+                countryName = getString(R.string.usa)
             }
 
             override fun onItemSelected(
@@ -219,23 +167,16 @@ class HistoryFragment : Fragment() {
                 id: Long
             ) {
 
-                    countryName = parent?.getItemAtPosition(position).toString()
+                countryName = parent?.getItemAtPosition(position).toString()
 
             }
 
         }
 
-
-
         dateTxt.setOnClickListener {
             showDatePicker()
 
         }
-
-
-
-
-
 
     }
 
@@ -246,7 +187,7 @@ class HistoryFragment : Fragment() {
         val mYear: Int = c.get(Calendar.YEAR)
         val mMonth: Int = c.get(Calendar.MONTH)
         val mDay: Int = c.get(Calendar.DAY_OF_MONTH)
-        val format = SimpleDateFormat("yyyy-MM-dd")
+        val format = SimpleDateFormat(getString(R.string.date_format))
 
         val datePickerDialog = DatePickerDialog(
             activity!!,
@@ -266,7 +207,6 @@ class HistoryFragment : Fragment() {
         datePickerDialog.show()
 
     }
-
 
 
 }

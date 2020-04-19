@@ -192,7 +192,7 @@
                                 android:layout_height="0dp"
                                 android:layout_marginBottom="5dp"
                                 android:layout_weight="1"
-                                android:text="@string/total_deathshistory"
+                                android:text="@string/total_deaths_history"
                                 android:textColor="@color/death"
                                 android:textStyle="bold" />
 
@@ -316,7 +316,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/Check_you_connection"
+            android:text="@string/check_connection"
             android:textAlignment="center"
             android:textColor="@color/font_color" />
     </LinearLayout>

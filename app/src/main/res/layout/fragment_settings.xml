@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/Check_you_connection"
+            android:text="@string/check_connection"
             android:textAlignment="center"
             android:textColor="@color/font_color" />
     </LinearLayout>

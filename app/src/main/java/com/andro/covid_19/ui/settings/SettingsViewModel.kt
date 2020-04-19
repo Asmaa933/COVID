@@ -2,7 +2,6 @@ package com.andro.covid_19.ui.settings
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andro.covid_19.data.api_services.ApiHandler
 import com.andro.covid_19.data.api_services.ApiInterface
@@ -10,7 +9,6 @@ import com.andro.covid_19.data.network.ConnectivityInterceptorImpl
 import com.andro.covid_19.data.repositary.covidRepository
 import com.andro.covid_19.data.repositary.covidRepositoryImpl
 import com.andro.retro.json_models.AllAffectedCountries
-import com.andro.retro.json_models.StatByCountry
 
 class SettingsViewModel : ViewModel() {
 

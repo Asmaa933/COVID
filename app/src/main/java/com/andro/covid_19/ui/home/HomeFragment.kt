@@ -25,41 +25,38 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
-    private var Mapcountries: ArrayList<CountriesStat> = ArrayList<CountriesStat>()
+    private var Mapcountries: ArrayList<CountriesStat> = ArrayList()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         HomeViewModel.context = this.context!!
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-
-       // setupObserversBasedRoom()
         setHasOptionsMenu(true)
         setupObserversBasedNatwork()
-
-
-
-
         return root
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(
+            ContextCompat.getColor(
+                context!!,
+                R.color.colorPrimary
+            )
+        )
         swipeRefreshLayout.setOnRefreshListener {
-            if (isNetworkConnected(activity!!))
-            {
+            if (isNetworkConnected(activity!!)) {
                 setupObserversBasedNatwork()
-            }
-            else
-            {
-                Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            } else {
+                Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action), null).show()
                 swipeRefreshLayout.isRefreshing = false
             }
-
 
 
         }
@@ -76,8 +73,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun renderWorldTotalStates(worldTotalStates: List<WorldTotalStates>) {
-        if(worldTotalStates.isNotEmpty())
-        {
+        if (worldTotalStates.isNotEmpty()) {
             tv_infected.text = worldTotalStates[0].total_cases
             tv_death.text = worldTotalStates[0].total_deaths
             tv_recovered.text = worldTotalStates[0].total_recovered
@@ -86,20 +82,20 @@ class HomeFragment : Fragment() {
     }
 
 
-
     private fun setupObserversBasedNatwork() {
 
-            homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> { renderCountries(it)
+        homeViewModel.getCountriesData().observe(viewLifecycleOwner, Observer<List<CountriesStat>> {
+            renderCountries(it)
+        })
+        homeViewModel.getWorldTotalStates()
+            .observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> {
+                renderWorldTotalStates(it)
             })
-                homeViewModel.getWorldTotalStates().observe(viewLifecycleOwner, Observer<List<WorldTotalStates>> { renderWorldTotalStates(it)
-                })
         GlobalScope.launch(Dispatchers.Main) {
 
 
-                swipeRefreshLayout.isRefreshing = false
-
-
-}
+            swipeRefreshLayout.isRefreshing = false
+        }
 
     }
 
@@ -113,14 +109,10 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.mapButton) {
-            /*val bundle = Bundle().also {
-                it.putSerializable("Mapcountries", Mapcountries)
-            }*/
             val mapFragment: Fragment = MapFragment()
-           // MapFragment.arguments = bundle
             val fragmentManager: FragmentManager = activity!!.supportFragmentManager
             val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.nav_host_fragment,  mapFragment)
+            fragmentTransaction.replace(R.id.nav_host_fragment, mapFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
 

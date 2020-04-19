@@ -4,7 +4,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,32 +16,21 @@ import com.andro.retro.json_models.CountriesStat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.map_fragment.*
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback{
 
-    companion object {
-        fun newInstance() = MapFragment()
-    }
-
     private lateinit var viewModel: MapViewModel
     private lateinit var googleMap: GoogleMap
     private lateinit var gc: Geocoder
-
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root=  inflater.inflate(R.layout.map_fragment, container, false)
         MapViewModel.context = this.context!!
         viewModel = ViewModelProviders.of(this).get(MapViewModel::class.java)
-
-
 
         return root
     }
@@ -57,13 +45,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
             if (isNetworkConnected(activity!!))
             {
                 loadMarker()
-                Snackbar.make(view!!, "Please Wait a minute", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                Snackbar.make(view!!, getString(R.string.wait_moment), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action), null).show()
             }
             else
             {
-                Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+                    .setAction((getString(R.string.action)), null).show()
             }
         }
 
@@ -87,13 +75,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         googleMap.setInfoWindowAdapter( InfoWindowAdapter(context?.applicationContext))
         if (!isNetworkConnected(activity!!))
         {
-            Snackbar.make(view!!, "Please Check your network connection", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            Snackbar.make(view!!, getString(R.string.check_connection), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.action), null).show()
         }
         else
         {
-            Snackbar.make(view!!, "Please Wait a minute", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            Snackbar.make(view!!,getString(R.string.wait_moment), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.action), null).show()
             loadMarker()
         }
 
@@ -102,11 +90,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
 
     private fun putEffectedCountries(countries: List<CountriesStat>, size:IntRange) {
         for (i in size) {
-            putEfectedCountriesAsync().execute(countries[i])
+            putAffectedCountriesAsync().execute(countries[i])
         }
     }
-
-
 
     override fun onMapLoaded() {
     }
@@ -119,7 +105,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
 
             })
     }
-    private inner class putEfectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>(){
+    private inner class putAffectedCountriesAsync : AsyncTask<CountriesStat, Void,  List<Address>>(){
 
         var countriesStat:CountriesStat? = null
         override fun doInBackground(vararg params: CountriesStat?): List<Address> {
@@ -137,7 +123,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallbac
         override fun onPostExecute(result: List<Address>) {
             super.onPostExecute(result)
             if (result.isNotEmpty()) {
-              //  var snippet:String = "\nConfirm : "+CountriesStat?.cases+"\nDeath : "+CountriesStat?.deaths+"\nRecover : "+CountriesStat?.total_recovered
                 googleMap.addMarker(
                     MarkerOptions().position(
                         LatLng(

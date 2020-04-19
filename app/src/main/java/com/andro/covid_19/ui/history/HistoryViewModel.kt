@@ -10,13 +10,13 @@ import com.andro.covid_19.data.repositary.covidRepository
 import com.andro.covid_19.data.repositary.covidRepositoryImpl
 import com.andro.retro.json_models.AllAffectedCountries
 import com.andro.retro.json_models.HistoryOfCountry
-import com.andro.retro.json_models.StatByCountry
 
 class HistoryViewModel : ViewModel() {
 
     companion object {
         lateinit var context: Context
     }
+
     private val api = ApiInterface(ConnectivityInterceptorImpl(context))
     private val apiHandler = ApiHandler(api)
 

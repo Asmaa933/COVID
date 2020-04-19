@@ -31,7 +31,6 @@ companion object{
                 applicationContext.getString(R.string.channel_id),
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channel1.description = "This is Channel 1"
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(channel1)
         }

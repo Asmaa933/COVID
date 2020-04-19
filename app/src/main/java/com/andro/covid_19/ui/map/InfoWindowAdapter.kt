@@ -17,21 +17,19 @@ class InfoWindowAdapter (internal var context: Context?) : GoogleMap.InfoWindowA
 
     override fun getInfoWindow(marker: Marker?): View {
         inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val v = inflater.inflate(R.layout.info_window_layout, null)
-        val cases = v.findViewById(R.id.info_window_cases) as TextView
-        val death = v.findViewById(R.id.info_window_deaths) as TextView
-        val recover = v.findViewById(R.id.info_window_recover) as TextView
-        cases.text =  "Cases : "+marker?.title
+        val view = inflater.inflate(R.layout.info_window_layout, null)
+        val cases = view.findViewById(R.id.info_window_cases) as TextView
+        val death = view.findViewById(R.id.info_window_deaths) as TextView
+        val recover = view.findViewById(R.id.info_window_recover) as TextView
+        cases.text =  "Cases : ${marker?.title}"
         if(marker?.snippet != null)
         {
             val parts: List<String> = marker?.snippet!!.split(",")
-            death.text = "Deaths: "+parts[0]
-            recover.text = "Recovers: "+parts[1]
+            death.text = "Deaths: ${parts[0]}"
+            recover.text = "Recovers: ${parts[1]}"
         }
 
-
-
-        return v
+        return view
 
     }
 
