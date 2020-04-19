@@ -4,6 +4,8 @@
 - Displays real-time data about the cases of COVID-19.
 - It shows worldwide data of confirmed, recovered and death cases. Users can also get country-wise data.
 - user can search for cases in country on specific day
+- user can subscribe on one country and get notification for cases
+- Display cases on Google Map
 ## Screenshots
 <p float="left">
   <img src="https://user-images.githubusercontent.com/44899782/79701714-9df96680-829f-11ea-9020-c2fa56532e15.png" width= "100"> 
@@ -20,6 +22,7 @@
 - Retrofit , OkHttp
 - Coroutine 
 - Alarm Manager
+- Google Map
 
 - COVID-19 Api: https://rapidapi.com/astsiatsko/api/coronavirus-monitor/endpoints
 
