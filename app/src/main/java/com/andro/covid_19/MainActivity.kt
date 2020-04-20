@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.replace
 import androidx.navigation.ui.AppBarConfiguration
 import com.andro.covid_19.ui.history.HistoryFragment
 import com.andro.covid_19.ui.home.HomeFragment
