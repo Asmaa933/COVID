@@ -23,7 +23,6 @@ class instructions : AppIntro() {
 
 
         addSlide(one());
-        addSlide(two());
         addSlide(three());
         addSlide(four());
         addSlide(five());
