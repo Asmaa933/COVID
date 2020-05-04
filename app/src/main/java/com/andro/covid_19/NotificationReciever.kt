@@ -63,6 +63,7 @@ class NotificationReciever: BroadcastReceiver() {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
 
                 .build()
 

@@ -36,7 +36,7 @@ object SavedPreferences {
     }
 
     fun resetInterval() {
-        saveCountry(0)
+        saveInterval(0)
     }
 
 }
