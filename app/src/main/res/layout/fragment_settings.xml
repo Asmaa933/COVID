@@ -53,7 +53,7 @@
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/notiCountry"
-        android:layout_width="121dp"
+        android:layout_width="141dp"
         android:layout_height="27dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="20dp"

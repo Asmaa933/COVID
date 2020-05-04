@@ -147,6 +147,13 @@ class SettingsFragment : Fragment() {
             if (isNetworkConnected(activity!!)) {
                 if (chosenPeriod == getString(R.string.none)) {
                     AlarmManagerHandler.cancelAlarm(countryName)
+                    Snackbar.make(
+                        view!!,
+                        "Subscribe cancelled on $countryName",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction(getString(R.string.action), null).show()
+
                 } else {
                     chosenPeriod?.let { it1 ->
                         AlarmManagerHandler.setAlarmManager(
@@ -156,13 +163,14 @@ class SettingsFragment : Fragment() {
                             intervalNo
                         )
                     }
+                    Snackbar.make(
+                        view!!,
+                        "Subscribe successfully on $countryName updates",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction(getString(R.string.action), null).show()
+
                 }
-                Snackbar.make(
-                    view!!,
-                    "Subscribe successfully on $countryName updates",
-                    Snackbar.LENGTH_LONG
-                )
-                    .setAction(getString(R.string.action), null).show()
 
             } else {
                 Snackbar.make(view!!, getString(R.string.connect_error), Snackbar.LENGTH_LONG)
